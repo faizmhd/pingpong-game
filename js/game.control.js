@@ -7,7 +7,7 @@ game.control = {
 
         game.control.controlSystem = "KEYBOARD";
 
-        if (event.keyCode == game.keycode.KEYDOWN) {
+        if (event.keyCode == game.keycode.KEYDOWN ) {
             game.playerOne.goDown = true;
         } else if (event.keyCode == game.keycode.KEYUP) {
             game.playerOne.goUp = true;

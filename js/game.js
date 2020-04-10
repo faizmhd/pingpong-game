@@ -98,16 +98,16 @@ var game = {
     movePlayers: function () {
         if (game.control.controlSystem == "KEYBOARD") {
             // keyboard control
-            if (game.playerOne.goUp) {
+            if (game.playerOne.goUp && game.playerOne.posY > 0) {
                 game.playerOne.posY -= 5;
-            } else if (game.playerOne.goDown) {
+            } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
                 game.playerOne.posY += 5;
             }
         } else if (game.control.controlSystem == "MOUSE") {
             // mouse control
             if (game.playerOne.goUp && game.playerOne.posY > game.control.mousePointer)
                 game.playerOne.posY -= 5;
-            else if (game.playerOne.goDown && game.playerOne.posY < game.control.mousePointer)
+            else if (game.playerOne.goDown && game.playerOne.posY < game.control.mousePointer && game.playerOne.posY < game.groundHeight - game.playerOne.height)
                 game.playerOne.posY += 5;
         }
     },
