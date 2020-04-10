@@ -2,10 +2,32 @@
 
 <head>
   <title>Ping Pong</title>
+  <link rel="stylesheet" href="index.css">
+  
+  <link rel="stylesheet" href="node_modules/skeleton-css/css/skeleton.css">
 </head>
 
 <body>
+  <div class='container'>
+  <div class="menu">
+    <h1>Ping Pong</h1>
+    <h3>How To Play</h3>
+    <ol>
+      <li>Player 1 Create a new game by entering the username</li>
+      <li>Player 2 Enter another username and the room id that is displayed on first window.</li>
+      <li>Click on join game. </li>
+    </ol>
+    <h4>Create a new Game</h4>
+    <input type="text" name="name" id="nameNew" placeholder="Enter your name" required>
+    <button id="new">New Game</button>
+    <br><br>
+    <h4>Join an existing game</h4>
+    <input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
+    <input type="text" name="room" id="room" placeholder="Enter Game ID" required>
+    <button id="join">Join Game</button>
+  </div>
   <div id='terrain'></div>
+  <button id='start_button'>Start the game</button>
 </body>
 <script src="./js/game.js"></script>
 <script src="./js/game.display.js"></script>
@@ -41,5 +63,5 @@
     // fin du code isolé
   })();
 </script>
-
+</div>
 </html>

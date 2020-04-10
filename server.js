@@ -6,7 +6,7 @@ let port = process.env.SERVER_PORT || 8080
 require('dotenv-flow').config();
 app.use(express.static('.'));
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'pong.html'))
+    res.sendFile(path.join(__dirname, 'index.html'))
 });
 
 app.listen(port);

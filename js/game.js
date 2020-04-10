@@ -7,7 +7,7 @@ var game = {
     scorePosPlayer1: 280,
     scorePosPlayer2: 365,
     groundLayer: null,
-
+    startGame: null,
     ball: {
         width: 10,
         height: 10,
@@ -17,7 +17,7 @@ var game = {
         speed: 5,
         directionX: 1,
         directionY: 1,
-        game: true,
+        game: false,
         move: function () {
             this.posX += this.directionX * this.speed;
             this.posY += this.directionY * this.speed;
@@ -76,6 +76,7 @@ var game = {
     },
 
     init: function () {
+        this.startGame = document.getElementById('start_button');
         this.groundLayer = game.display.createLayer("terrain", this.groundWidth, this.groundHeight, undefined, 0, "#000000", 0, 0);
 
         game.display.drawRectangleInLayer(this.groundLayer, this.netWidth, this.groundHeight, this.netColor, this.groundWidth / 2 - this.netWidth / 2, 0);
@@ -88,8 +89,9 @@ var game = {
 
         this.initKeyboard(game.control.onKeyDown, game.control.onKeyUp);
         this.initMouse(game.control.onMouseMove);
+        this.start_the_game()
         game.ia.setPlayerAndBall(this.playerTwo, this.ball);
-        this.start = true;
+        
     },
     displayScore: function (scorePlayer1, scorePlayer2) {
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer1, "60px Arial", "#FFFFFF", this.scorePosPlayer1, 55);
@@ -103,10 +105,11 @@ var game = {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
     },
     moveBall: function () {
+        this.displayBall();
         if (this.ball.game) {
             this.ball.move();
             this.ball.bounce();
-            this.displayBall();
+            
         }
     },
     clearLayer: function (targetLayer) {
@@ -167,5 +170,8 @@ var game = {
             this.ball.game = false;
             game.display.drawScoreLayer(this.playersBallLayer, winner, this.groundWidth, this.groundHeight)
         }
+    },
+    start_the_game: function() {
+        this.startGame.onclick = game.control.startTheGame;
     }
 };

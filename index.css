@@ -1,0 +1,10 @@
+#terrain {
+    display: none;
+}
+#start_button{
+    display: none;
+    float: right;
+}
+.menu {
+    display:block;
+}

@@ -39,5 +39,8 @@ game.control = {
             game.playerOne.goDown = false;
             game.playerOne.goUp = false;
         }
+    },
+    startTheGame: function () {
+        game.ball.game = true;
     }
 }
