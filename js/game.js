@@ -7,16 +7,17 @@ var game = {
     scorePosPlayer1: 280,
     scorePosPlayer2: 365,
     groundLayer: null,
-    start: false,
+
     ball: {
         width: 10,
         height: 10,
         color: "#ffcc00",
         posX: 200,
         posY: 200,
-        speed: 3,
+        speed: 5,
         directionX: 1,
         directionY: 1,
+        game: true,
         move: function () {
             this.posX += this.directionX * this.speed;
             this.posY += this.directionY * this.speed;
@@ -102,9 +103,11 @@ var game = {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
     },
     moveBall: function () {
-        this.ball.move();
-        this.ball.bounce();
-        this.displayBall();
+        if (this.ball.game) {
+            this.ball.move();
+            this.ball.bounce();
+            this.displayBall();
+        }
     },
     clearLayer: function (targetLayer) {
         targetLayer.clear();
@@ -149,5 +152,20 @@ var game = {
         this.scoreLayer.clear();
         this.displayScore(this.playerOne.score, this.playerTwo.score)
 
+    },
+    checkVictory: function () {
+        let winner = null;
+        if (this.playerOne.score === 6)
+            winner = "Player 1 wins !";
+        else if (this.playerTwo.score === 6)
+            winner = "Player 2 wins !"
+
+        if (winner !== null) {
+            this.playersBallLayer.clear();
+            this.ball.posX = this.groundHeight / 2
+            this.ball.posY = this.groundWidth / 2
+            this.ball.game = false;
+            game.display.drawScoreLayer(this.playersBallLayer, winner, this.groundWidth, this.groundHeight)
+        }
     }
 };
