@@ -90,7 +90,7 @@ var game = {
         this.initKeyboard(game.control.onKeyDown, game.control.onKeyUp);
         this.initMouse(game.control.onMouseMove);
         this.start_the_game()
-        game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+        // game.ia.setPlayerAndBall(this.playerTwo, this.ball);
         
     },
     displayScore: function (scorePlayer1, scorePlayer2) {
@@ -127,12 +127,12 @@ var game = {
             } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
                 game.playerOne.posY += 5;
             }
-        } else if (game.control.controlSystem == "MOUSE") {
+        } if (game.control.controlSystem == "MOUSE") {
             // mouse control
-            if (game.playerOne.goUp && game.playerOne.posY > game.control.mousePointer)
-                game.playerOne.posY -= 5;
-            else if (game.playerOne.goDown && game.playerOne.posY < game.control.mousePointer && game.playerOne.posY < game.groundHeight - game.playerOne.height)
-                game.playerOne.posY += 5;
+            if (game.playerTwo.goUp && game.playerTwo.posY > game.control.mousePointer)
+                game.playerTwo.posY -= 5;
+            else if (game.playerTwo.goDown && game.playerTwo.posY < game.control.mousePointer && game.playerTwo.posY < game.groundHeight - game.playerTwo.height)
+                game.playerTwo.posY += 5;
         }
     },
     initMouse: function (onMouseMoveFunction) {

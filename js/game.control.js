@@ -29,15 +29,15 @@ game.control = {
             game.control.mousePointer = event.clientY;
         }
 
-        if (game.control.mousePointer > game.playerOne.posY) {
-            game.playerOne.goDown = true;
-            game.playerOne.goUp = false;
-        } else if (game.control.mousePointer < game.playerOne.posY) {
-            game.playerOne.goDown = false;
-            game.playerOne.goUp = true;
+        if (game.control.mousePointer > game.playerTwo.posY) {
+            game.playerTwo.goDown = true;
+            game.playerTwo.goUp = false;
+        } else if (game.control.mousePointer < game.playerTwo.posY) {
+            game.playerTwo.goDown = false;
+            game.playerTwo.goUp = true;
         } else {
-            game.playerOne.goDown = false;
-            game.playerOne.goUp = false;
+            game.playerTwo.goDown = false;
+            game.playerTwo.goUp = false;
         }
     },
     startTheGame: function () {
