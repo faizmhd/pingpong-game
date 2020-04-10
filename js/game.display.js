@@ -17,7 +17,7 @@ game.display = {
     },
 
     createLayer: function (name, width, height, htmlContainer, zIndex, backgroundColor, x, y) {
-        var layer = Object.create(this.layer);
+        var layer = Object.create(this.layer);        
 
         layer.canvas = window.document.createElement("canvas");
 
@@ -52,7 +52,8 @@ game.display = {
         if (htmlContainer != undefined) {
             htmlContainer.appendChild(layer.canvas);
         } else {
-            document.body.appendChild(layer.canvas);
+            let terrain = document.getElementById('terrain')
+            terrain.appendChild(layer.canvas);
         }
 
         layer.context2D = layer.canvas.getContext('2d');

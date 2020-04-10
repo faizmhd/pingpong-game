@@ -4,16 +4,17 @@ var game = {
     groundColor: "#000000",
     netWidth: 6,
     netColor: "#FFFFFF",
-    scorePosPlayer1: 300,
+    scorePosPlayer1: 280,
     scorePosPlayer2: 365,
     groundLayer: null,
+    start: false,
     ball: {
         width: 10,
         height: 10,
         color: "#ffcc00",
         posX: 200,
         posY: 200,
-        speed: 1,
+        speed: 3,
         directionX: 1,
         directionY: 1,
         move: function () {
@@ -34,6 +35,20 @@ var game = {
             }
             return false;
         },
+        goal: function (player) {
+            if (player.originalPosition == 'left') {
+                if (this.posX < 0) {
+                    return true
+                }
+                return false
+            }
+            else if (player.originalPosition == 'right') {
+                if (this.posX > game.groundWidth) {
+                    return true
+                }
+                return false
+            }
+        }
     },
     playerOne: {
         width: 10,
@@ -43,7 +58,8 @@ var game = {
         posY: 200,
         goUp: false,
         goDown: false,
-        originalPosition: 'left'
+        originalPosition: 'left',
+        score: 0
     },
 
     playerTwo: {
@@ -54,7 +70,8 @@ var game = {
         posY: 200,
         goUp: false,
         goDown: false,
-        originalPosition: 'right'
+        originalPosition: 'right',
+        score: 0
     },
 
     init: function () {
@@ -64,13 +81,14 @@ var game = {
         this.scoreLayer = game.display.createLayer("score", this.groundWidth, this.groundHeight, undefined, 1, undefined, 0, 0);
         this.playersBallLayer = game.display.createLayer("joueursetballe", this.groundWidth, this.groundHeight, undefined, 2, undefined, 0, 0);
 
-        this.displayScore(0, 0);
+        this.displayScore(this.playerOne.score, this.playerTwo.score);
         this.displayBall();
         this.displayPlayers();
 
         this.initKeyboard(game.control.onKeyDown, game.control.onKeyUp);
         this.initMouse(game.control.onMouseMove);
         game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+        this.start = true;
     },
     displayScore: function (scorePlayer1, scorePlayer2) {
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer1, "60px Arial", "#FFFFFF", this.scorePosPlayer1, 55);
@@ -120,5 +138,16 @@ var game = {
         if (this.ball.collide(game.playerTwo))
             game.ball.directionX = -game.ball.directionX;
     },
+    checkGoal: function () {
 
+        if (this.ball.goal(this.playerOne)) {
+            this.playerTwo.score++;
+        }
+        else if (this.ball.goal(this.playerTwo)) {
+            this.playerOne.score++;
+        }
+        this.scoreLayer.clear();
+        this.displayScore(this.playerOne.score, this.playerTwo.score)
+
+    }
 };
