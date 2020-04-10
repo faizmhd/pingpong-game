@@ -17,7 +17,7 @@ game.display = {
     },
 
     createLayer: function (name, width, height, htmlContainer, zIndex, backgroundColor, x, y) {
-        var layer = Object.create(this.layer);
+        var layer = Object.create(this.layer);        
 
         layer.canvas = window.document.createElement("canvas");
 
@@ -52,7 +52,8 @@ game.display = {
         if (htmlContainer != undefined) {
             htmlContainer.appendChild(layer.canvas);
         } else {
-            document.body.appendChild(layer.canvas);
+            let terrain = document.getElementById('terrain')
+            terrain.appendChild(layer.canvas);
         }
 
         layer.context2D = layer.canvas.getContext('2d');
@@ -69,5 +70,13 @@ game.display = {
         targetLayer.context2D.font = font;
         targetLayer.context2D.fillStyle = color;
         targetLayer.context2D.fillText(text, x, y);
+    },
+
+    drawScoreLayer: function (targetLayer, winner, width, heigth) {
+        targetLayer.context2D.fillStyle = "	#A8A8A8";
+        targetLayer.context2D.font = "30px Arial";
+        targetLayer.context2D.fillRect(width/4, heigth/4, width/2, heigth/2);
+        targetLayer.context2D.fillStyle = "	#FFFFFF"
+        targetLayer.context2D.fillText(winner, width/4+width/8, heigth/2);
     }
 }

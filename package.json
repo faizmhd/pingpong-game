@@ -1,0 +1,29 @@
+{
+  "name": "pingpong-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7",
+    "skeleton-css": "^2.0.4"
+  },
+  "devDependencies": {
+    "dotenv-flow": "^3.1.0",
+    "nodemon": "^2.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faizmhd/pingpong-game.git"
+  },
+  "author": "Faizan MOUHAMAD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/faizmhd/pingpong-game/issues"
+  },
+  "homepage": "https://github.com/faizmhd/pingpong-game#readme"
+}
