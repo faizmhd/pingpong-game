@@ -54,7 +54,7 @@ var game = {
     playerOne: {
         width: 10,
         height: 50,
-        color: "#FFFFFF",
+        color: "#3333ff",
         posX: 30,
         posY: 200,
         goUp: false,
@@ -66,7 +66,7 @@ var game = {
     playerTwo: {
         width: 10,
         height: 50,
-        color: "#FFFFFF",
+        color: "#ff1a1a",
         posX: 650,
         posY: 200,
         goUp: false,
