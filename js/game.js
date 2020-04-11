@@ -12,9 +12,12 @@ class Game {
         this.startGame = null;
         this.scoreToWin = 2;
         this.ball = ball;
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
+        this.playerOne = null;
+        this.playerTwo = null;
+        // this.playerOne = playerOne;
+        // this.playerTwo = playerTwo;
         this.playerSound = new Audio('../sound/player.ogg');
+        this.letsgo = false;
     }
 
     getPlayerOne () {
@@ -24,16 +27,28 @@ class Game {
         return this.playerTwo.getPlayerName()
     }
 
+    getLetsGo () {
+        return this.letsgo;
+    }
+
     setPlayerOne (playerOne) {
         this.playerOne = playerOne;
+        
     }
 
     setPlayerTwo (playerTwo) {
         this.playerTwo = playerTwo;
+        if(this.playerOne && this.playerTwo){
+            this.letsgo = true;
+        }
     }
 
     setRoomId (roomId) {
         this.roomId = roomId;
+    }
+
+    setLetsGo (letsgo) {
+        this.letsgo = letsgo;
     }
 
     init () {
@@ -62,11 +77,23 @@ class Game {
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer1, "60px Arial", "#FFFFFF", this.scorePosPlayer1, 55);
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer2, "60px Arial", "#FFFFFF", this.scorePosPlayer2, 55);
     }
+    displayScore1 (scorePlayer1) {
+        game.display.drawTextInLayer(this.scoreLayer, scorePlayer1, "60px Arial", "#FFFFFF", this.scorePosPlayer1, 55);
+    }
+    displayScore2 (scorePlayer2) {
+        game.display.drawTextInLayer(this.scoreLayer, scorePlayer2, "60px Arial", "#FFFFFF", this.scorePosPlayer2, 55);
+    }
     displayBall () {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.ball.width, this.ball.height, this.ball.color, this.ball.posX, this.ball.posY);
     }
     displayPlayers () {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerOne.width, this.playerOne.height, this.playerOne.color, this.playerOne.posX, this.playerOne.posY);
+        game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
+    }
+    displayPlayer1 () {
+        game.display.drawRectangleInLayer(this.playersBallLayer, this.playerOne.width, this.playerOne.height, this.playerOne.color, this.playerOne.posX, this.playerOne.posY);
+    }
+    displayPlayer2 () {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
     }
     moveBall () {
@@ -100,6 +127,25 @@ class Game {
                 game.playerTwo.posY += 7;
         }
     }
+    movePlayer1 () {
+        if (game.control.controlSystem == "KEYBOARD") {
+            // keyboard control
+            if (game.playerOne.goUp && game.playerOne.posY > 0) {
+                game.playerOne.posY -= 7;
+            } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
+                game.playerOne.posY += 7;
+            }
+        }
+    }
+    movePlayer2 () {
+        if (game.control.controlSystem == "MOUSE") {
+            // mouse control
+            if (game.playerTwo.goUp && game.playerTwo.posY > game.control.mousePointer)
+                game.playerTwo.posY -= 7;
+            else if (game.playerTwo.goDown && game.playerTwo.posY < game.control.mousePointer && game.playerTwo.posY < game.groundHeight - game.playerTwo.height)
+                game.playerTwo.posY += 7;
+        }
+    }
     initMouse (onMouseMoveFunction) {
         window.onmousemove = onMouseMoveFunction;
     }
@@ -115,7 +161,20 @@ class Game {
         }
             
     }
+    collideBallWithPlayer1AndAction () {
+        if (this.ball.collide(game.playerOne)){
+            game.ball.directionX = -game.ball.directionX;
+            this.playerSound.play();
+        }            
+    }
+    collideBallWithPlayer2AndAction () {            
+        if (this.ball.collide(game.playerTwo)){
+            game.ball.directionX = -game.ball.directionX;
+            this.playerSound.play();
+        }
+    }
     checkGoal () {
+        // Check if two players are available and different from null
     
         if (this.ball.goal(this.playerOne)) {
             this.playerTwo.score++;
@@ -128,6 +187,7 @@ class Game {
     
     }
     checkVictory () {
+        // Check if two players are available and different from null
         let winner = null;
         if (this.playerOne.score === this.scoreToWin)
             winner = "Player 1 wins !";
@@ -153,4 +213,4 @@ class Game {
     }
 }
 
-var game = new Game(new Ball(), new Player('one', 'left'), new Player('two', 'right'));
+var game = new Game(new Ball());

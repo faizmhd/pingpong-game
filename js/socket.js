@@ -30,9 +30,6 @@
             return;
         }
         socket.emit('createGame', { name });
-        player = new Player(name, 'left');
-        // game = new Game(ball);
-        // game.setPlayerOne(player);
         
     });
     // Creation of the pong for P1
@@ -43,9 +40,6 @@
 
         pong = new Room(data.room);
         pong.displayBoard(message);
-        // game.setRoomId(data.room)
-        // game.init();
-        initialisation();
         
     });
 
@@ -57,14 +51,11 @@
             return;
         }
         socket.emit('joinGame', { name, room: roomID });
-        player = new Player(name, 'right');
     });
 
     socket.on('player1', (data) => {
-        const message = `Hello, ${player.getPlayerName()}`;
+        const message = `Hello, ${data.player1.name}`;
         $('#userHello').html(message);
-        // initialisation();
-        
     });
 
     socket.on('player2', (data) => {
@@ -72,8 +63,16 @@
 
         pong = new Room(data.room);
         pong.displayBoard(message);
-        // initialisation();
     });
+
+    socket.on('playgame', (data) => {
+        player1 = new Player(data.player1.name, data.player1.position)
+        game.setPlayerOne(player1)
+        player2 = new Player(data.player2.name, data.player2.position)
+        game.setPlayerTwo(player2)
+        initialisation();
+        
+    })
 
     socket.on('err', (data) => {
         alert(data.message);
