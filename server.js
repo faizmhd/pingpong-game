@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
         if (room && room.length === 1) {
             socket.join(data.room);
             socket.broadcast.to(data.room).emit('player1', {});
-            socket.emit('player2', { name: data.name, room: data.room })
+            socket.emit('player2', { name: data.name, room: data.room})
         } else {
             socket.emit('err', { message: 'Sorry, The room is full!' });
         }

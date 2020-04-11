@@ -1,4 +1,25 @@
 (function () {
+    var requestAnimId;
+
+    var initialisation = function () {
+      // le code de l'initialisation
+      game.init();
+      requestAnimId = window.requestAnimationFrame(main); // premier appel de main au rafraîchissement de la page
+    }
+
+    var main = function () {
+      // le code du jeu
+      game.clearLayer(game.playersBallLayer);
+      game.movePlayers();
+      game.displayPlayers();
+      game.moveBall();
+      game.checkGoal();
+      game.checkVictory();
+      // game.ia.move();
+      game.collideBallWithPlayersAndAction();
+      requestAnimId = window.requestAnimationFrame(main); // rappel de main au prochain rafraîchissement de la page
+    }
+    let ping_pong = game;
     let pong;
     let player
     let socket = io();
@@ -20,7 +41,6 @@
 
         pong = new Game(data.room);
         pong.displayBoard(message);
-
     });
 
     $('#join').on('click', () => {
@@ -37,6 +57,7 @@
     socket.on('player1', (data) => {
         const message = `Hello, ${player.getPlayerName()}`;
         $('#userHello').html(message);
+        initialisation();
     });
 
     socket.on('player2', (data) => {
@@ -44,6 +65,7 @@
 
         pong = new Game(data.room);
         pong.displayBoard(message);
+        initialisation();
     });
 
     socket.on('err', (data) => {
