@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const port = process.env.SERVER_PORT || 8080
+const title = process.env.TITLE || 'PingPongGame'
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
@@ -36,4 +37,4 @@ io.on('connection', function (socket) {
 });
 
 server.listen(port);
-console.log(process.env.TITLE + ' is running on port : ' + port);
+console.log(title + ' is running on port : ' + port);

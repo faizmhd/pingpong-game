@@ -41,10 +41,10 @@ game.control = {
         }
     },
     startTheGame: function () {
-        game.ball.game = true;
+        game.ball.start_game = true;
     },
     pauseTheGame: function () {
-        game.ball.game = !game.ball.game;
+        game.ball.start_game = !game.ball.start_game;
     },
     quitTheGame: function () {
         location.reload()
