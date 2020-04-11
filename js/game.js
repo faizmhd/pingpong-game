@@ -54,7 +54,7 @@ var game = {
     playerOne: {
         width: 10,
         height: 50,
-        color: "#FFFFFF",
+        color: "#3333ff",
         posX: 30,
         posY: 200,
         goUp: false,
@@ -66,7 +66,7 @@ var game = {
     playerTwo: {
         width: 10,
         height: 50,
-        color: "#FFFFFF",
+        color: "#ff1a1a",
         posX: 650,
         posY: 200,
         goUp: false,
@@ -77,6 +77,8 @@ var game = {
 
     init: function () {
         this.startGame = document.getElementById('start_button');
+        this.pauseGame = document.getElementById('pause_button');
+        this.quitGame = document.getElementById('quit_button');
         this.groundLayer = game.display.createLayer("terrain", this.groundWidth, this.groundHeight, undefined, 0, "#000000", 0, 0);
 
         game.display.drawRectangleInLayer(this.groundLayer, this.netWidth, this.groundHeight, this.netColor, this.groundWidth / 2 - this.netWidth / 2, 0);
@@ -90,6 +92,8 @@ var game = {
         this.initKeyboard(game.control.onKeyDown, game.control.onKeyUp);
         this.initMouse(game.control.onMouseMove);
         this.start_the_game()
+        this.pause_the_game()
+        this.quit_the_game()
         // game.ia.setPlayerAndBall(this.playerTwo, this.ball);
         
     },
@@ -123,16 +127,16 @@ var game = {
         if (game.control.controlSystem == "KEYBOARD") {
             // keyboard control
             if (game.playerOne.goUp && game.playerOne.posY > 0) {
-                game.playerOne.posY -= 5;
+                game.playerOne.posY -= 7;
             } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
-                game.playerOne.posY += 5;
+                game.playerOne.posY += 7;
             }
         } if (game.control.controlSystem == "MOUSE") {
             // mouse control
             if (game.playerTwo.goUp && game.playerTwo.posY > game.control.mousePointer)
-                game.playerTwo.posY -= 5;
+                game.playerTwo.posY -= 7;
             else if (game.playerTwo.goDown && game.playerTwo.posY < game.control.mousePointer && game.playerTwo.posY < game.groundHeight - game.playerTwo.height)
-                game.playerTwo.posY += 5;
+                game.playerTwo.posY += 7;
         }
     },
     initMouse: function (onMouseMoveFunction) {
@@ -168,10 +172,17 @@ var game = {
             this.ball.posX = this.groundHeight / 2
             this.ball.posY = this.groundWidth / 2
             this.ball.game = false;
-            game.display.drawScoreLayer(this.playersBallLayer, winner, this.groundWidth, this.groundHeight)
+            game.display.drawScoreLayer(this.playersBallLayer, winner, this.groundWidth, this.groundHeight);
+            // location.reload()
         }
     },
     start_the_game: function() {
         this.startGame.onclick = game.control.startTheGame;
+    },
+    pause_the_game: function() {
+        this.pauseGame.onclick = game.control.pauseTheGame;
+    },
+    quit_the_game: function() {
+        this.quitGame.onclick = game.control.quitTheGame;
     }
 };

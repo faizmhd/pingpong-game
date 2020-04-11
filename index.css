@@ -1,10 +1,13 @@
-#terrain {
-    display: block;
+.main_game {
+    display: none;
 }
-#start_button{
-    display: block;
+#terrain {
+    position: absolute;
+}
+.control_button{
     float: right;
+    display: grid;
 }
 .menu {
-    display:none;
+    display:block;
 }

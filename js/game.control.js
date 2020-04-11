@@ -42,5 +42,11 @@ game.control = {
     },
     startTheGame: function () {
         game.ball.game = true;
+    },
+    pauseTheGame: function () {
+        game.ball.game = !game.ball.game;
+    },
+    quitTheGame: function () {
+        location.reload()
     }
 }
