@@ -24,4 +24,8 @@ class Player {
     getPlayerPosition() {
         return this.originalPosition;
     }
+
+    setPosition (posY) {
+        this.posY = posY;
+    }
 }

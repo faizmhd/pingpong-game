@@ -43,6 +43,15 @@ io.on('connection', function (socket) {
             socket.emit('err', { message: 'Sorry, The room is full!' });
         }
     });
+
+    socket.on('updatePlayer', function (data) {
+        let room = io.nsps['/'].adapter.rooms[data.room];
+        socket.join(data.room);
+        // socket.emit('movePlayers', {data});
+        socket.broadcast.to(data.room).emit('movePlayers', {player1: data.player1, position:data.position});
+        // io.sockets.in(data.room).emit('player1', {name: 'Liloo'})
+        // console.log('data',data)
+    })
     socket.on('disconnect', function () {
         io.emit('user disconnected');
     });
