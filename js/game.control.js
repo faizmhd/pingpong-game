@@ -14,6 +14,11 @@ game.control = {
                 game.playerOne.goUp = true;
             }
         }
+
+        if (event.keyCode == game.keycode.SPACEBAR) {
+            game.ball.start_game = true;
+            game.whoStart = true;
+        }
     },
 
     onKeyUp: function (event) {
@@ -52,11 +57,10 @@ game.control = {
     },
     startTheGame: function () {
         game.ball.start_game = true;
-    },
-    pauseTheGame: function () {
-        game.ball.start_game = !game.ball.start_game;
+        game.whoStart = true;
     },
     quitTheGame: function () {
+        game.exitGame = true;
         location.reload()
     }
 }

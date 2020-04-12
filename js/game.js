@@ -16,6 +16,8 @@ class Game {
         this.playerSound = new Audio('../sound/player.ogg');
         this.letsgo = false;
         this.amIPlayerOne = false;
+        this.whoStart = false;
+        this.exitGame = false;  
     }
 
     getPlayerOne() {
@@ -51,7 +53,6 @@ class Game {
 
     init() {
         this.startGame = document.getElementById('start_button');
-        this.pauseGame = document.getElementById('pause_button');
         this.quitGame = document.getElementById('quit_button');
         this.groundLayer = game.display.createLayer("terrain", this.groundWidth, this.groundHeight, undefined, 0, "#000000", 0, 0);
 
@@ -66,7 +67,6 @@ class Game {
         this.initKeyboard(game.control.onKeyDown, game.control.onKeyUp);
         this.initMouse(game.control.onMouseMove);
         this.start_the_game()
-        this.pause_the_game()
         this.quit_the_game()
         // game.ia.setPlayerAndBall(this.playerTwo, this.ball);
 
@@ -84,7 +84,7 @@ class Game {
     }
     moveBall() {
         
-        if (this.ball.start_game && !this.amIPlayerOne) {
+        if (this.ball.start_game && this.whoStart) {
             this.displayBall()
             this.ball.move();
             this.ball.bounce(this);
@@ -144,9 +144,13 @@ class Game {
     checkGoal() {
         if (this.ball.goal(this.playerOne)) {
             this.playerTwo.score++;
+            this.ball = new Ball('left');
+            this.whoStart = false
         }
         else if (this.ball.goal(this.playerTwo)) {
             this.playerOne.score++;
+            this.ball = new Ball('right')
+            this.whoStart = false
         }
         this.scoreLayer.clear();
         this.displayScore(this.playerOne.score, this.playerTwo.score)
@@ -169,12 +173,9 @@ class Game {
     start_the_game() {
         this.startGame.onclick = game.control.startTheGame;
     }
-    pause_the_game() {
-        this.pauseGame.onclick = game.control.pauseTheGame;
-    }
     quit_the_game() {
         this.quitGame.onclick = game.control.quitTheGame;
     }
 }
 
-var game = new Game(new Ball());
+var game = new Game(new Ball('left'));

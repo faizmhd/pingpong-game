@@ -1,15 +1,23 @@
 class Ball {
-    constructor() {
+    constructor(player_pos) {
         this.width = 10;
         this.height = 10;
         this.color = "#ffcc00";
-        this.posX = 200;
-        this.posY = 200;
         this.speed = 5;
-        this.directionX = 1;
-        this.directionY = 1;
         this.start_game = false;
         this.wallSound = new Audio('../sound/wall.ogg');
+        if (player_pos === 'left') {
+            this.posX = 200;
+            this.posY = 200;
+            this.directionX = 1;
+            this.directionY = 1;
+        }
+        else if (player_pos === 'right'){
+            this.posX = 500;
+            this.posY = 200;
+            this.directionX = -1;
+            this.directionY = 1;
+        }
     }
 
     getPosX () {
@@ -26,6 +34,14 @@ class Ball {
 
     setPosY (posY) {
         return this.posY = posY;
+    }
+
+    getStatus () {
+        return this.start_game;
+    }
+
+    setStatus (status) {
+        this.start_game = status;
     }
 
     move () {
