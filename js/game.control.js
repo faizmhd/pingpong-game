@@ -15,6 +15,9 @@ game.control = {
     },
 
     onKeyUp: function (event) {
+
+        game.control.controlSystem = "KEYBOARD";
+        
         if (event.keyCode == game.keycode.KEYDOWN) {
             game.playerOne.goDown = false;
         } else if (event.keyCode == game.keycode.KEYUP) {
@@ -41,10 +44,10 @@ game.control = {
         }
     },
     startTheGame: function () {
-        game.ball.game = true;
+        game.ball.start_game = true;
     },
     pauseTheGame: function () {
-        game.ball.game = !game.ball.game;
+        game.ball.start_game = !game.ball.start_game;
     },
     quitTheGame: function () {
         location.reload()
