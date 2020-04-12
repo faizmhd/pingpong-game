@@ -13,7 +13,9 @@ N° of players : 2
 
 ## Commands to run the application
 
-<h3>First, clone this repo.</h3>
+**First, clone this repo.**
+
+In the project directory, you can :
 
 * Run Node commands :
 
@@ -22,12 +24,14 @@ npm install
 npm start
 ```
 
-* Run with Docker :
+* Run Docker commands :
 
 ```bash
 docker-compose build
 docker-compose up
 ```
+
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 ## Technologies
 
@@ -36,3 +40,5 @@ docker-compose up
 * Node JS (Express JS)
 * Socket.IO
 * Docker
+
+## Screenshots
