@@ -13,11 +13,11 @@
     var main = function () {
         // le code du jeu
         game.clearLayer(game.playersBallLayer);
-        // game.movePlayers();
         updatePlayers()
-        game.movePlayer2()
         game.displayPlayers();
+        game.displayBall();
         game.moveBall();
+        updateBall()
         game.checkGoal();
         game.checkVictory();
         // game.ia.move();
@@ -37,6 +37,12 @@
             if (player2_pos) {
                 socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: false, position: player2_pos })
             }
+        }
+    }
+
+    var updateBall = function () {
+        if (!game.amIPlayerOne) {
+            socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
         }
     }
 
@@ -72,13 +78,13 @@
     });
 
     socket.on('player1', (data) => {
-        const message = `Hello, ${data.player1.name}`;
+        const message = `Hello, ${data.player1.name}. You are the Player 1.`;
         $('#userHello').html(message);
         game.amIPlayerOne = true;
     });
 
     socket.on('player2', (data) => {
-        const message = `Hello, ${data.name}`;
+        const message = `Hello, ${data.name}. You are the Player 2.`;
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
@@ -100,6 +106,10 @@
         else{
             game.getPlayerTwo().setPosition(data.position)
         }
+    })
+    socket.on('moveBall', (data) => {
+        game.getBall().setPosX(data.posX);
+        game.getBall().setPosY(data.posY);
     })
 
     socket.on('err', (data) => {

@@ -12,9 +12,26 @@ class Ball {
         this.wallSound = new Audio('../sound/wall.ogg');
     }
 
+    getPosX () {
+        return this.posX;
+    }
+    
+    getPosY () {
+        return this.posY;
+    }
+
+    setPosX (posX) {
+        return this.posX = posX;
+    }
+
+    setPosY (posY) {
+        return this.posY = posY;
+    }
+
     move () {
         this.posX += this.directionX * this.speed;
         this.posY += this.directionY * this.speed;
+        return {posX: this.posX, posY: this.posY};
     }
     bounce (game) {
         if (this.posX > game.groundWidth || this.posX < 0){
