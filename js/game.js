@@ -16,100 +16,101 @@ class Game {
         this.playerTwo = null;
         this.playerSound = new Audio('../sound/player.ogg');
         this.letsgo = false;
+        this.amIPlayerOne = false;
     }
 
-    getPlayerOne () {
-        return this.playerOne.getPlayerName()
+    getPlayerOne() {
+        return this.playerOne
     }
-    getPlayerTwo () {
-        return this.playerTwo.getPlayerName()
+    getPlayerTwo() {
+        return this.playerTwo
     }
 
-    getLetsGo () {
+    getLetsGo() {
         return this.letsgo;
     }
 
-    setPlayerOne (playerOne) {
+    setPlayerOne(playerOne) {
         this.playerOne = playerOne;
-        
+
     }
 
-    setPlayerTwo (playerTwo) {
+    setPlayerTwo(playerTwo) {
         this.playerTwo = playerTwo;
-        if(this.playerOne && this.playerTwo){
+        if (this.playerOne && this.playerTwo) {
             this.letsgo = true;
         }
     }
 
-    setRoomId (roomId) {
+    setRoomId(roomId) {
         this.roomId = roomId;
     }
 
-    setLetsGo (letsgo) {
+    setLetsGo(letsgo) {
         this.letsgo = letsgo;
     }
 
-    init () {
+    init() {
         this.startGame = document.getElementById('start_button');
         this.pauseGame = document.getElementById('pause_button');
         this.quitGame = document.getElementById('quit_button');
         this.groundLayer = game.display.createLayer("terrain", this.groundWidth, this.groundHeight, undefined, 0, "#000000", 0, 0);
-    
+
         game.display.drawRectangleInLayer(this.groundLayer, this.netWidth, this.groundHeight, this.netColor, this.groundWidth / 2 - this.netWidth / 2, 0);
         this.scoreLayer = game.display.createLayer("score", this.groundWidth, this.groundHeight, undefined, 1, undefined, 0, 0);
         this.playersBallLayer = game.display.createLayer("joueursetballe", this.groundWidth, this.groundHeight, undefined, 2, undefined, 0, 0);
-    
+
         this.displayScore(this.playerOne.score, this.playerTwo.score);
         this.displayBall();
         this.displayPlayers();
-    
+
         this.initKeyboard(game.control.onKeyDown, game.control.onKeyUp);
         this.initMouse(game.control.onMouseMove);
         this.start_the_game()
         this.pause_the_game()
         this.quit_the_game()
         // game.ia.setPlayerAndBall(this.playerTwo, this.ball);
-        
+
     }
-    displayScore (scorePlayer1, scorePlayer2) {
+    displayScore(scorePlayer1, scorePlayer2) {
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer1, "60px Arial", "#FFFFFF", this.scorePosPlayer1, 55);
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer2, "60px Arial", "#FFFFFF", this.scorePosPlayer2, 55);
     }
-    displayScore1 (scorePlayer1) {
+    displayScore1(scorePlayer1) {
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer1, "60px Arial", "#FFFFFF", this.scorePosPlayer1, 55);
     }
-    displayScore2 (scorePlayer2) {
+    displayScore2(scorePlayer2) {
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer2, "60px Arial", "#FFFFFF", this.scorePosPlayer2, 55);
     }
-    displayBall () {
+    displayBall() {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.ball.width, this.ball.height, this.ball.color, this.ball.posX, this.ball.posY);
     }
-    displayPlayers () {
+    displayPlayers() {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerOne.width, this.playerOne.height, this.playerOne.color, this.playerOne.posX, this.playerOne.posY);
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
     }
-    displayPlayer1 () {
+    displayPlayer1() {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerOne.width, this.playerOne.height, this.playerOne.color, this.playerOne.posX, this.playerOne.posY);
     }
-    displayPlayer2 () {
+    displayPlayer2() {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
     }
-    moveBall () {
+    moveBall() {
         this.displayBall();
         if (this.ball.start_game) {
             this.ball.move();
             this.ball.bounce(this);
-            
+
         }
     }
-    clearLayer (targetLayer) {
+    clearLayer(targetLayer) {
         targetLayer.clear();
     }
-    initKeyboard (onKeyDownFunction, onKeyUpFunction) {
+    initKeyboard(onKeyDownFunction, onKeyUpFunction) {
         window.onkeydown = onKeyDownFunction;
         window.onkeyup = onKeyUpFunction;
     }
-    movePlayers () {
+    movePlayers() {
         if (game.control.controlSystem == "KEYBOARD") {
             // keyboard control
             if (game.playerOne.goUp && game.playerOne.posY > 0) {
@@ -125,55 +126,67 @@ class Game {
                 game.playerTwo.posY += 7;
         }
     }
-    movePlayer1 () {
-        if (game.control.controlSystem == "KEYBOARD") {
-            // keyboard control
-            if (game.playerOne.goUp && game.playerOne.posY > 0) {
-                game.playerOne.posY -= 7;
-            } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
-                game.playerOne.posY += 7;
+    movePlayer1() {
+        if (game.amIPlayerOne) {
+            if (game.control.controlSystem == "KEYBOARD") {
+                // keyboard control
+                if (game.playerOne.goUp && game.playerOne.posY > 0) {
+                    game.playerOne.posY -= 7
+                    return game.playerOne.posY;
+                } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
+                    game.playerOne.posY += 7;
+                    return game.playerOne.posY;
+                }
             }
         }
+        return false
     }
-    movePlayer2 () {
-        if (game.control.controlSystem == "MOUSE") {
-            // mouse control
-            if (game.playerTwo.goUp && game.playerTwo.posY > game.control.mousePointer)
-                game.playerTwo.posY -= 7;
-            else if (game.playerTwo.goDown && game.playerTwo.posY < game.control.mousePointer && game.playerTwo.posY < game.groundHeight - game.playerTwo.height)
-                game.playerTwo.posY += 7;
+    movePlayer2() {
+        if (!game.amIPlayerOne) {
+            if (game.control.controlSystem == "MOUSE") {
+                // mouse control
+                if (game.playerTwo.goUp && game.playerTwo.posY > game.control.mousePointer) {
+                    game.playerTwo.posY -= 7;
+                    return game.playerTwo.posY;
+                }
+                else if (game.playerTwo.goDown && game.playerTwo.posY < game.control.mousePointer && game.playerTwo.posY < game.groundHeight - game.playerTwo.height) {
+                    game.playerTwo.posY += 7;
+                    return game.playerTwo.posY;
+                }
+            }
         }
+        return false
     }
-    initMouse (onMouseMoveFunction) {
+    initMouse(onMouseMoveFunction) {
         window.onmousemove = onMouseMoveFunction;
     }
-    collideBallWithPlayersAndAction () {
-        if (this.ball.collide(game.playerOne)){
+    collideBallWithPlayersAndAction() {
+        if (this.ball.collide(game.playerOne)) {
             game.ball.directionX = -game.ball.directionX;
             this.playerSound.play();
         }
-            
-        if (this.ball.collide(game.playerTwo)){
+
+        if (this.ball.collide(game.playerTwo)) {
             game.ball.directionX = -game.ball.directionX;
             this.playerSound.play();
         }
-            
+
     }
-    collideBallWithPlayer1AndAction () {
-        if (this.ball.collide(game.playerOne)){
-            game.ball.directionX = -game.ball.directionX;
-            this.playerSound.play();
-        }            
-    }
-    collideBallWithPlayer2AndAction () {            
-        if (this.ball.collide(game.playerTwo)){
+    collideBallWithPlayer1AndAction() {
+        if (this.ball.collide(game.playerOne)) {
             game.ball.directionX = -game.ball.directionX;
             this.playerSound.play();
         }
     }
-    checkGoal () {
+    collideBallWithPlayer2AndAction() {
+        if (this.ball.collide(game.playerTwo)) {
+            game.ball.directionX = -game.ball.directionX;
+            this.playerSound.play();
+        }
+    }
+    checkGoal() {
         // Check if two players are available and different from null
-    
+
         if (this.ball.goal(this.playerOne)) {
             this.playerTwo.score++;
         }
@@ -182,16 +195,16 @@ class Game {
         }
         this.scoreLayer.clear();
         this.displayScore(this.playerOne.score, this.playerTwo.score)
-    
+
     }
-    checkVictory () {
+    checkVictory() {
         // Check if two players are available and different from null
         let winner = null;
         if (this.playerOne.score === this.scoreToWin)
             winner = "Player 1 wins !";
         else if (this.playerTwo.score === this.scoreToWin)
             winner = "Player 2 wins !"
-    
+
         if (winner !== null) {
             this.playersBallLayer.clear();
             this.ball.posX = this.groundHeight / 2
