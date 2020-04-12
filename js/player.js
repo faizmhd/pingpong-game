@@ -24,4 +24,16 @@ class Player {
     getPlayerPosition() {
         return this.originalPosition;
     }
+
+    getScore () {
+        return this.score;
+    }
+
+    setScore () {
+        this.score = score;
+    }
+
+    setPosition (posY) {
+        this.posY = posY;
+    }
 }

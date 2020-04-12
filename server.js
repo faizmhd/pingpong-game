@@ -32,7 +32,6 @@ io.on('connection', function (socket) {
         if (room && room.length === 1) {
             socket.join(data.room);
             socket.broadcast.to(data.room).emit('player1', {player1:player1});
-            // io.sockets.in(data.room).emit('player1', {})
             socket.emit('player2', { name: data.name, room: data.room});
             player2 = {
                 name: data.name, 
@@ -43,8 +42,26 @@ io.on('connection', function (socket) {
             socket.emit('err', { message: 'Sorry, The room is full!' });
         }
     });
-    socket.on('disconnect', function () {
-        io.emit('user disconnected');
+
+    socket.on('updatePlayer', function (data) {
+        socket.join(data.room);
+        socket.broadcast.to(data.room).emit('movePlayers', {player1: data.player1, position:data.position});
+    });
+
+    socket.on('updateBall', function (data) {
+        socket.join(data.room);
+        socket.broadcast.to(data.room).emit('moveBall', {posX:data.posX, posY:data.posY});
+    });
+
+    socket.on('updateGameStatus', function (data) {
+        socket.join(data.room);
+        socket.broadcast.to(data.room).emit('updateStart', {start: data.start});
+    })
+
+    
+    socket.on('endGame', function (data) {
+        socket.join(data.room);
+        socket.broadcast.to(data.room).emit('exitGame', {player1: data.player1});
     });
 });
 
