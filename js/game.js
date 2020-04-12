@@ -14,8 +14,6 @@ class Game {
         this.ball = ball;
         this.playerOne = null;
         this.playerTwo = null;
-        // this.playerOne = playerOne;
-        // this.playerTwo = playerTwo;
         this.playerSound = new Audio('../sound/player.ogg');
         this.letsgo = false;
     }
