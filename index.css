@@ -11,3 +11,21 @@
 .menu {
     display:block;
 }
+#bigdiv {
+    display: flex;
+}
+
+div:nth-child(2) {
+    margin-left: 40px;
+}
+
+#logo-racket {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    margin-left: 15px;
+}
+
+#ping-title {
+    display: flex;
+}
