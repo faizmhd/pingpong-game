@@ -6,13 +6,13 @@ class Ball {
         this.speed = 5;
         this.start_game = false;
         this.wallSound = new Audio('../sound/wall.ogg');
-        if (player_pos === 'left') {
+        if (player_pos == 'left') {
             this.posX = 200;
             this.posY = 200;
             this.directionX = 1;
             this.directionY = 1;
         }
-        else if (player_pos === 'right'){
+        else if (player_pos == 'right'){
             this.posX = 500;
             this.posY = 200;
             this.directionX = -1;

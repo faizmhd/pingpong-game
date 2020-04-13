@@ -72,7 +72,7 @@ class Game {
         if (this.IA) {
             game.ia.setPlayerAndBall(this.playerTwo, this.ball);
         }
-
+        console.log('init')
 
     }
     displayScore(scorePlayer1, scorePlayer2) {
@@ -167,11 +167,17 @@ class Game {
             this.playerTwo.score++;
             this.ball = new Ball('left');
             this.whoStart = false
+            if (this.IA) {
+                game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+            }
         }
         else if (this.ball.goal(this.playerTwo)) {
             this.playerOne.score++;
             this.ball = new Ball('right')
             this.whoStart = false
+            if (this.IA) {
+                game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+            }
         }
         this.scoreLayer.clear();
         this.displayScore(this.playerOne.score, this.playerTwo.score)

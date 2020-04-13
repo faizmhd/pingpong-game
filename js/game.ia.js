@@ -4,7 +4,7 @@ game.ia = {
 
   setPlayerAndBall: function (player, ball) {
     this.player = player;
-    this.ball = ball;
+    this.ball = game.getBall();
   },
 
   move: function () {
@@ -21,6 +21,7 @@ game.ia = {
       if (this.player.originalPosition == "right") {
         // center
         this.goCenter();
+        console.log('ball-dir', this.ball.directionX)
       }
       if (this.player.originalPosition == "left") {
         // follow

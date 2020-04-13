@@ -11,7 +11,6 @@
     var main = function () {
         // le code du jeu
         game.clearLayer(game.playersBallLayer);
-        console.log('ia',game.IA)
         if (game.IA)
             updatePlayers()
         game.displayPlayers();
@@ -43,7 +42,6 @@
             if (player2_pos) {
                 socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: false, position: player2_pos })
             }
-
         }
     }
 
@@ -92,12 +90,8 @@
         game.setPlayerTwo(player2)
         game.IA = true;
         initialisation();
-        // socket.emit('createGameIA', { name });
-
     });
 
-
-    // Creation of the Player one
     $('#new').on('click', () => {
         const name = $('#nameNew').val();
         if (!name) {
@@ -107,7 +101,7 @@
         socket.emit('createGame', { name });
 
     });
-    // Creation of the pong for P1
+
     socket.on('newGame', (data) => {
         const message =
             `Hello, ${data.name}. Please ask your friend to enter Game ID: 
