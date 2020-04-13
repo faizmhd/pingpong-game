@@ -101,6 +101,31 @@ class Game {
         window.onkeydown = onKeyDownFunction;
         window.onkeyup = onKeyUpFunction;
     }
+    movePlayer(player) {
+        if (!this.IA) {
+            if (game.control.controlSystem == "KEYBOARD") {
+                // keyboard control
+                if (player.goUp && player.posY > 0) {
+                    player.posY -= 7;
+                    return player.posY;
+                } else if (player.goDown && player.posY < game.groundHeight - player.height) {
+                    player.posY += 7;
+                    return player.posY;
+                }
+            } if (game.control.controlSystem == "MOUSE") {
+                // mouse control
+                if (player.goUp && player.posY > game.control.mousePointer) {
+                    player.posY -= 7;
+                    return player.posY;
+                }
+                else if (player.goDown && player.posY < game.control.mousePointer && player.posY < game.groundHeight - player.height) {
+                    player.posY += 7;
+                    return player.posY;
+                }
+            }
+        }
+        return false
+    }
     movePlayer1() {
         if (game.control.controlSystem == "KEYBOARD") {
             // keyboard control

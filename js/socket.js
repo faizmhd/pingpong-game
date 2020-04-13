@@ -11,19 +11,16 @@
     var main = function () {
         // le code du jeu
         game.clearLayer(game.playersBallLayer);
-        if (game.IA)
-            updatePlayers()
+        updatePlayers()
         game.displayPlayers();
         game.displayBall();
-        if (game.IA)
-            startGame()
+        startGame()
         game.moveBall();
-        if (game.IA)
-            updateBall()
+        updateBall()
         game.checkGoal();
         game.checkVictory();
-        if (game.IA) {
-            checkEndGame();
+        checkEndGame();
+        if(game.IA){
             game.ia.move();
         }
         game.collideBallWithPlayersAndAction();
@@ -33,12 +30,14 @@
     var updatePlayers = function () {
         if (game.amIPlayerOne) {
             let player1_pos = game.movePlayer1();
+            // let player1_pos = game.movePlayer(game.getPlayerOne());
             if (player1_pos) {
                 socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: true, position: player1_pos })
             }
         }
         else {
             let player2_pos = game.movePlayer2();
+            // let player2_pos = game.movePlayer(game.getPlayerTwo());
             if (player2_pos) {
                 socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: false, position: player2_pos })
             }
