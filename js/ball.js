@@ -44,6 +44,10 @@ class Ball {
         this.start_game = status;
     }
 
+    setSpeed (speed) {
+        this.speed = speed;
+    }
+
     move () {
         this.posX += this.directionX * this.speed;
         this.posY += this.directionY * this.speed;
