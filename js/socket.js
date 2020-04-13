@@ -28,18 +28,46 @@
     }
 
     var updatePlayers = function () {
-        if (game.amIPlayerOne) {
-            let player1_pos = game.movePlayer(game.getPlayerOne());
-            if (player1_pos) {
-                socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: true, position: player1_pos })
+        if (game.nb_players == 2) {
+            if (game.playerId == 1) {
+                let player1_pos = game.movePlayer(game.getPlayerOne());
+                if (player1_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player1_pos })
+                }
+            }
+            else {
+                let player2_pos = game.movePlayer(game.getPlayerTwo());
+                if (player2_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player2_pos })
+                }
             }
         }
-        else {
-            let player2_pos = game.movePlayer(game.getPlayerTwo());
-            if (player2_pos) {
-                socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: false, position: player2_pos })
+        else if (game.nb_players == 4) {
+            if (game.playerId == 1) {
+                let player1_pos = game.movePlayer(game.getPlayerOne());
+                if (player1_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player1_pos })
+                }
+            }
+            else if (game.playerId == 2) {
+                let player2_pos = game.movePlayer(game.getPlayerTwo());
+                if (player2_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player2_pos })
+                }
+            }
+            else if (game.playerId == 3) {
+                let player3_pos = game.movePlayer(game.getPlayerThree());
+                if (player3_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player3_pos })
+                }
+            } else if (game.playerId == 4) {
+                let player4_pos = game.movePlayer(game.getPlayerFour());
+                if (player4_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player4_pos })
+                }
             }
         }
+
     }
 
     var startGame = function () {
@@ -79,6 +107,7 @@
         const message =
             `Hello, ${name}.`;
         game.amIPlayerOne = true;
+        game.playerId = 1
         this.pong = new Room('IA_room');
         this.pong.displayBoard(message);
         player1 = new Player(name, 1)
@@ -124,6 +153,7 @@
         const message = `Hello, ${data.player1.name}`;
         $('#userHello').html(message);
         game.amIPlayerOne = true;
+        game.playerId = 1
     });
 
     socket.on('player2', (data) => {
@@ -131,6 +161,7 @@
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
+        game.playerId = 2
 
     });
     socket.on('player3', (data) => {
@@ -138,6 +169,7 @@
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
+        game.playerId = 3
 
     });
     socket.on('player4', (data) => {
@@ -145,6 +177,7 @@
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
+        game.playerId = 4
 
     });
 
@@ -170,11 +203,26 @@
 
     });
     socket.on('movePlayers', (data) => {
-        if (data.player1) {
-            game.getPlayerOne().setPosition(data.position)
-        }
-        else {
-            game.getPlayerTwo().setPosition(data.position)
+        if (game.nb_players == 2) {
+            if (data.id == 1) {
+                game.getPlayerOne().setPosition(data.position)
+            }
+            else {
+                game.getPlayerTwo().setPosition(data.position)
+            }
+        } else if (game.nb_players == 4) {
+            if (data.id == 1) {
+                game.getPlayerOne().setPosition(data.position)
+            }
+            else if (data.id == 2) {
+                game.getPlayerTwo().setPosition(data.position)
+            }
+            else if (data.id == 3) {
+                game.getPlayerThree().setPosition(data.position)
+            } 
+            else if (data.id == 4) {
+                game.getPlayerFour().setPosition(data.position)
+            }
         }
     })
     socket.on('moveBall', (data) => {

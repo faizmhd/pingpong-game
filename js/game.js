@@ -22,6 +22,7 @@ class Game {
         this.exitGame = false;
         this.IA = false;
         this.nb_players = 2;
+        this.playerId = null;
     }
 
     getPlayerOne() {

@@ -81,7 +81,7 @@ io.on('connection', function (socket) {
 
     socket.on('updatePlayer', function (data) {
         socket.join(data.room);
-        socket.broadcast.to(data.room).emit('movePlayers', { player1: data.player1, position: data.position });
+        socket.broadcast.to(data.room).emit('movePlayers', { id: data.id, position: data.position });
     });
 
     socket.on('updateBall', function (data) {
