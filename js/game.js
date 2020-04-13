@@ -13,12 +13,15 @@ class Game {
         this.ball = ball;
         this.playerOne = null;
         this.playerTwo = null;
+        this.playerThree = null;
+        this.playerFour = null;
         this.playerSound = new Audio('../sound/player.ogg');
         this.letsgo = false;
         this.amIPlayerOne = false;
         this.whoStart = false;
         this.exitGame = false;
         this.IA = false;
+        this.nb_players = 2;
     }
 
     getPlayerOne() {
@@ -26,6 +29,12 @@ class Game {
     }
     getPlayerTwo() {
         return this.playerTwo
+    }
+    getPlayerThree() {
+        return this.playerThree
+    }
+    getPlayerFour() {
+        return this.playerFour
     }
 
     getLetsGo() {
@@ -38,12 +47,22 @@ class Game {
 
     setPlayerOne(playerOne) {
         this.playerOne = playerOne;
+    }
 
+    setPlayerThree(playerThree) {
+        this.playerThree = playerThree;
+    }
+
+    setPlayerFour(playerFour) {
+        this.playerFour = playerFour;
+        if (this.nb_players == 4 && this.playerOne && this.playerTwo && this.playerThree) {
+            this.letsgo = true;
+        }
     }
 
     setPlayerTwo(playerTwo) {
         this.playerTwo = playerTwo;
-        if (this.playerOne && this.playerTwo) {
+        if (this.nb_players == 2 && this.playerOne && this.playerTwo) {
             this.letsgo = true;
         }
     }
@@ -72,8 +91,6 @@ class Game {
         if (this.IA) {
             game.ia.setPlayerAndBall(this.playerTwo, this.ball);
         }
-        console.log('init')
-
     }
     displayScore(scorePlayer1, scorePlayer2) {
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer1, "60px Arial", "#FFFFFF", this.scorePosPlayer1, 55);
@@ -83,8 +100,16 @@ class Game {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.ball.width, this.ball.height, this.ball.color, this.ball.posX, this.ball.posY);
     }
     displayPlayers() {
-        game.display.drawRectangleInLayer(this.playersBallLayer, this.playerOne.width, this.playerOne.height, this.playerOne.color, this.playerOne.posX, this.playerOne.posY);
-        game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
+        if (this.nb_players == 2) {
+            game.display.drawRectangleInLayer(this.playersBallLayer, this.playerOne.width, this.playerOne.height, this.playerOne.color, this.playerOne.posX, this.playerOne.posY);
+            game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
+        }
+        else if (this.nb_players == 4) {
+            game.display.drawRectangleInLayer(this.playersBallLayer, this.playerOne.width, this.playerOne.height, this.playerOne.color, this.playerOne.posX, this.playerOne.posY);
+            game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
+            game.display.drawRectangleInLayer(this.playersBallLayer, this.playerThree.width, this.playerThree.height, this.playerThree.color, this.playerThree.posX, this.playerThree.posY);
+            game.display.drawRectangleInLayer(this.playersBallLayer, this.playerFour.width, this.playerFour.height, this.playerFour.color, this.playerFour.posX, this.playerFour.posY);
+        }
     }
     moveBall() {
 
@@ -102,7 +127,7 @@ class Game {
         window.onkeyup = onKeyUpFunction;
     }
     movePlayer(player) {
-        if (!this.IA) {
+        if (!player.getIARole()) {
             if (game.control.controlSystem == "KEYBOARD") {
                 // keyboard control
                 if (player.goUp && player.posY > 0) {
@@ -126,54 +151,6 @@ class Game {
         }
         return false
     }
-    movePlayer1() {
-        if (game.control.controlSystem == "KEYBOARD") {
-            // keyboard control
-            if (game.playerOne.goUp && game.playerOne.posY > 0) {
-                game.playerOne.posY -= 7;
-                return game.playerOne.posY;
-            } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
-                game.playerOne.posY += 7;
-                return game.playerOne.posY;
-            }
-        } if (game.control.controlSystem == "MOUSE") {
-            // mouse control
-            if (game.playerOne.goUp && game.playerOne.posY > game.control.mousePointer) {
-                game.playerOne.posY -= 7;
-                return game.playerOne.posY;
-            }
-            else if (game.playerOne.goDown && game.playerOne.posY < game.control.mousePointer && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
-                game.playerOne.posY += 7;
-                return game.playerOne.posY;
-            }
-        }
-        return false
-    }
-    movePlayer2() {
-        if (!this.IA) {
-            if (game.control.controlSystem == "KEYBOARD") {
-                // keyboard control
-                if (game.playerTwo.goUp && game.playerTwo.posY > 0) {
-                    game.playerTwo.posY -= 7;
-                    return game.playerTwo.posY;
-                } else if (game.playerTwo.goDown && game.playerTwo.posY < game.groundHeight - game.playerTwo.height) {
-                    game.playerTwo.posY += 7;
-                    return game.playerTwo.posY;
-                }
-            } if (game.control.controlSystem == "MOUSE") {
-                // mouse control
-                if (game.playerTwo.goUp && game.playerTwo.posY > game.control.mousePointer) {
-                    game.playerTwo.posY -= 7;
-                    return game.playerTwo.posY;
-                }
-                else if (game.playerTwo.goDown && game.playerTwo.posY < game.control.mousePointer && game.playerTwo.posY < game.groundHeight - game.playerTwo.height) {
-                    game.playerTwo.posY += 7;
-                    return game.playerTwo.posY;
-                }
-            }
-        }
-        return false
-    }
     initMouse(onMouseMoveFunction) {
         window.onmousemove = onMouseMoveFunction;
     }
@@ -190,7 +167,7 @@ class Game {
     checkGoal() {
         if (this.ball.goal(this.playerOne)) {
             this.playerTwo.score++;
-            this.ball = new Ball('left');
+            this.ball = new Ball(1);
             this.whoStart = false
             if (this.IA) {
                 game.ia.setPlayerAndBall(this.playerTwo, this.ball);
@@ -198,7 +175,7 @@ class Game {
         }
         else if (this.ball.goal(this.playerTwo)) {
             this.playerOne.score++;
-            this.ball = new Ball('right')
+            this.ball = new Ball(2)
             this.whoStart = false
             if (this.IA) {
                 game.ia.setPlayerAndBall(this.playerTwo, this.ball);
@@ -230,4 +207,4 @@ class Game {
     }
 }
 
-var game = new Game(new Ball('left'));
+var game = new Game(new Ball(1));
