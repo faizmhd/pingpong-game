@@ -20,7 +20,7 @@
         game.checkGoal();
         game.checkVictory();
         checkEndGame();
-        if(game.IA){
+        if (game.IA) {
             game.ia.move();
         }
         game.collideBallWithPlayersAndAction();
@@ -29,15 +29,13 @@
 
     var updatePlayers = function () {
         if (game.amIPlayerOne) {
-            let player1_pos = game.movePlayer1();
-            // let player1_pos = game.movePlayer(game.getPlayerOne());
+            let player1_pos = game.movePlayer(game.getPlayerOne());
             if (player1_pos) {
                 socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: true, position: player1_pos })
             }
         }
         else {
-            let player2_pos = game.movePlayer2();
-            // let player2_pos = game.movePlayer(game.getPlayerTwo());
+            let player2_pos = game.movePlayer(game.getPlayerTwo());
             if (player2_pos) {
                 socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: false, position: player2_pos })
             }
@@ -83,9 +81,10 @@
         game.amIPlayerOne = true;
         this.pong = new Room('IA_room');
         this.pong.displayBoard(message);
-        player1 = new Player(name, 'left')
+        player1 = new Player(name, 1)
         game.setPlayerOne(player1)
-        player2 = new Player('IA', 'right')
+        player2 = new Player('IA', 2)
+        player2.setIARole(true)
         game.setPlayerTwo(player2)
         game.IA = true;
         initialisation();
@@ -97,14 +96,14 @@
             alert('Please enter your name.');
             return;
         }
-        socket.emit('createGame', { name });
-
+        const nb_player = $('input[name=nb_player]:checked').val();
+        socket.emit('createGame', { name: name, nb_player: nb_player });
     });
 
     socket.on('newGame', (data) => {
         const message =
             `Hello, ${data.name}. Please ask your friend to enter Game ID: 
-      ${data.room}. Waiting for player 2...`;
+      ${data.room}. Waiting for opponents...`;
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
@@ -128,7 +127,21 @@
     });
 
     socket.on('player2', (data) => {
-        const message = `Hello, ${data.name}`;
+        const message = `Hello, ${data.player2.name}`;
+
+        this.pong = new Room(data.room);
+        this.pong.displayBoard(message);
+
+    });
+    socket.on('player3', (data) => {
+        const message = `Hello, ${data.player3.name}`;
+
+        this.pong = new Room(data.room);
+        this.pong.displayBoard(message);
+
+    });
+    socket.on('player4', (data) => {
+        const message = `Hello, ${data.player4.name}`;
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
@@ -136,10 +149,23 @@
     });
 
     socket.on('playgame', (data) => {
-        player1 = new Player(data.player1.name, data.player1.position)
-        game.setPlayerOne(player1)
-        player2 = new Player(data.player2.name, data.player2.position)
-        game.setPlayerTwo(player2)
+        if (data.nb_player == 2) {
+            player1 = new Player(data.player1.name, data.player1.position)
+            game.setPlayerOne(player1)
+            player2 = new Player(data.player2.name, data.player2.position)
+            game.setPlayerTwo(player2)
+        } else if (data.nb_player == 4) {
+            game.nb_players = data.nb_player
+            player1 = new Player(data.player1.name, data.player1.position)
+            game.setPlayerOne(player1)
+            player2 = new Player(data.player2.name, data.player2.position)
+            game.setPlayerTwo(player2)
+            player3 = new Player(data.player3.name, data.player3.position)
+            game.setPlayerThree(player3)
+            player4 = new Player(data.player4.name, data.player4.position)
+            game.setPlayerFour(player4)
+        }
+
         initialisation();
 
     });
