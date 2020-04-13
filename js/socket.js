@@ -11,16 +11,21 @@
     var main = function () {
         // le code du jeu
         game.clearLayer(game.playersBallLayer);
-        updatePlayers()
+        if (game.IA)
+            updatePlayers()
         game.displayPlayers();
         game.displayBall();
-        startGame()
+        if (game.IA)
+            startGame()
         game.moveBall();
-        updateBall()
+        if (game.IA)
+            updateBall()
         game.checkGoal();
         game.checkVictory();
-        checkEndGame();
-        // game.ia.move();
+        if (game.IA) {
+            checkEndGame();
+            game.ia.move();
+        }
         game.collideBallWithPlayersAndAction();
         requestAnimId = window.requestAnimationFrame(main); // rappel de main au prochain rafraîchissement de la page
     }
@@ -58,16 +63,35 @@
         }
     }
 
-    var checkEndGame = function() {
-        if(game.exitGame && game.amIPlayerOne){
-            socket.emit('endGame', {room: this.pong.getRoomId(), player1: true});
+    var checkEndGame = function () {
+        if (game.exitGame && game.amIPlayerOne) {
+            socket.emit('endGame', { room: this.pong.getRoomId(), player1: true });
         }
-        else if (game.exitGame && !game.amIPlayerOne){
-            socket.emit('endGame', {room: this.pong.getRoomId(), player1: false});
+        else if (game.exitGame && !game.amIPlayerOne) {
+            socket.emit('endGame', { room: this.pong.getRoomId(), player1: false });
         }
     }
 
     // Creation of the Player one
+    $('#new_IA').on('click', () => {
+        const name = $('#nameNewIA').val();
+        if (!name) {
+            alert('Please enter your name.');
+            return;
+        }
+        const message =
+            `Hello, ${name}.`;
+        game.amIPlayerOne = true;
+        this.pong = new Room('IA_room');
+        this.pong.displayBoard(message);
+        player1 = new Player(name, 'left')
+        game.setPlayerOne(player1)
+        player2 = new Player('IA', 'right')
+        game.setPlayerTwo(player2)
+        game.IA = true;
+        initialisation();
+    });
+
     $('#new').on('click', () => {
         const name = $('#nameNew').val();
         if (!name) {
@@ -77,7 +101,7 @@
         socket.emit('createGame', { name });
 
     });
-    // Creation of the pong for P1
+
     socket.on('newGame', (data) => {
         const message =
             `Hello, ${data.name}. Please ask your friend to enter Game ID: 
@@ -137,7 +161,7 @@
     });
 
     socket.on('exitGame', (data) => {
-        if(data.player1){
+        if (data.player1) {
             message = game.getPlayerOne().getPlayerName() + ' leaves the room !'
         }
         else {

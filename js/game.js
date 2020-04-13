@@ -17,7 +17,8 @@ class Game {
         this.letsgo = false;
         this.amIPlayerOne = false;
         this.whoStart = false;
-        this.exitGame = false;  
+        this.exitGame = false;
+        this.IA = false;
     }
 
     getPlayerOne() {
@@ -68,7 +69,10 @@ class Game {
         this.initMouse(game.control.onMouseMove);
         this.start_the_game()
         this.quit_the_game()
-        // game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+        if (this.IA) {
+            game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+        }
+        console.log('init')
 
     }
     displayScore(scorePlayer1, scorePlayer2) {
@@ -83,7 +87,7 @@ class Game {
         game.display.drawRectangleInLayer(this.playersBallLayer, this.playerTwo.width, this.playerTwo.height, this.playerTwo.color, this.playerTwo.posX, this.playerTwo.posY);
     }
     moveBall() {
-        
+
         if (this.ball.start_game && this.whoStart) {
             this.displayBall()
             this.ball.move();
@@ -98,23 +102,40 @@ class Game {
         window.onkeyup = onKeyUpFunction;
     }
     movePlayer1() {
-        if (game.amIPlayerOne) {
-            if (game.control.controlSystem == "KEYBOARD") {
-                // keyboard control
-                if (game.playerOne.goUp && game.playerOne.posY > 0) {
-                    game.playerOne.posY -= 7
-                    return game.playerOne.posY;
-                } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
-                    game.playerOne.posY += 7;
-                    return game.playerOne.posY;
-                }
+        if (game.control.controlSystem == "KEYBOARD") {
+            // keyboard control
+            if (game.playerOne.goUp && game.playerOne.posY > 0) {
+                game.playerOne.posY -= 7;
+                return game.playerOne.posY;
+            } else if (game.playerOne.goDown && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
+                game.playerOne.posY += 7;
+                return game.playerOne.posY;
+            }
+        } if (game.control.controlSystem == "MOUSE") {
+            // mouse control
+            if (game.playerOne.goUp && game.playerOne.posY > game.control.mousePointer) {
+                game.playerOne.posY -= 7;
+                return game.playerOne.posY;
+            }
+            else if (game.playerOne.goDown && game.playerOne.posY < game.control.mousePointer && game.playerOne.posY < game.groundHeight - game.playerOne.height) {
+                game.playerOne.posY += 7;
+                return game.playerOne.posY;
             }
         }
         return false
     }
     movePlayer2() {
-        if (!game.amIPlayerOne) {
-            if (game.control.controlSystem == "MOUSE") {
+        if (!this.IA) {
+            if (game.control.controlSystem == "KEYBOARD") {
+                // keyboard control
+                if (game.playerTwo.goUp && game.playerTwo.posY > 0) {
+                    game.playerTwo.posY -= 7;
+                    return game.playerTwo.posY;
+                } else if (game.playerTwo.goDown && game.playerTwo.posY < game.groundHeight - game.playerTwo.height) {
+                    game.playerTwo.posY += 7;
+                    return game.playerTwo.posY;
+                }
+            } if (game.control.controlSystem == "MOUSE") {
                 // mouse control
                 if (game.playerTwo.goUp && game.playerTwo.posY > game.control.mousePointer) {
                     game.playerTwo.posY -= 7;
@@ -146,11 +167,17 @@ class Game {
             this.playerTwo.score++;
             this.ball = new Ball('left');
             this.whoStart = false
+            if (this.IA) {
+                game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+            }
         }
         else if (this.ball.goal(this.playerTwo)) {
             this.playerOne.score++;
             this.ball = new Ball('right')
             this.whoStart = false
+            if (this.IA) {
+                game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+            }
         }
         this.scoreLayer.clear();
         this.displayScore(this.playerOne.score, this.playerTwo.score)
