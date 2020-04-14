@@ -79,7 +79,7 @@
                 socket.emit('updateGameStatus', { room: this.pong.getRoomId(), start: true })
             }
         }
-        else if(game.nb_players == 4){
+        else if (game.nb_players == 4) {
             if (game.playerId == 1 && game.whoStart) {
                 socket.emit('updateGameStatus', { room: this.pong.getRoomId(), start: true })
             }
@@ -104,7 +104,7 @@
                 socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
             }
         }
-        else if(game.nb_players == 4){
+        else if (game.nb_players == 4) {
             if (game.playerId == 1 && game.whoStart) {
                 socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
             }
@@ -243,6 +243,7 @@
                 game.getPlayerTwo().setPosition(data.position)
             }
         } else if (game.nb_players == 4) {
+            console.log(game.playerId)
             if (data.id == 1) {
                 game.getPlayerOne().setPosition(data.position)
             }
@@ -251,8 +252,8 @@
             }
             else if (data.id == 3) {
                 game.getPlayerThree().setPosition(data.position)
-            } 
-            else if (data.id == 4) {
+            }
+            else{
                 game.getPlayerFour().setPosition(data.position)
             }
         }
@@ -274,7 +275,7 @@
                 message = game.getPlayerTwo().getPlayerName() + ' leaves the room !'
             }
         }
-        else if (game.nb_players == 4){
+        else if (game.nb_players == 4) {
             if (data.id == 1) {
                 message = game.getPlayerOne().getPlayerName() + ' leaves the room !'
             }

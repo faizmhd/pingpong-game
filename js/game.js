@@ -56,7 +56,7 @@ class Game {
 
     setPlayerFour(playerFour) {
         this.playerFour = playerFour;
-        if (this.nb_players == 4 && this.playerOne && this.playerTwo && this.playerThree) {
+        if (this.nb_players == 4 && this.playerOne && this.playerTwo && this.playerThree && this.playerFour) {
             this.letsgo = true;
         }
     }
