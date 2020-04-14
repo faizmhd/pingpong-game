@@ -45,9 +45,9 @@ game.control = {
                 }
             } else if (game.playerId == 4){
                 if (event.keyCode == game.keycode.KEYDOWN) {
-                    game.PlayerFour.goDown = true;
+                    game.playerFour.goDown = true;
                 } else if (event.keyCode == game.keycode.KEYUP) {
-                    game.PlayerFour.goUp = true;
+                    game.playerFour.goUp = true;
                 }
             }
         }

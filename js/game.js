@@ -156,13 +156,34 @@ class Game {
         window.onmousemove = onMouseMoveFunction;
     }
     collideBallWithPlayersAndAction() {
-        if (this.ball.collide(game.playerOne)) {
-            game.ball.directionX = -game.ball.directionX;
-            this.playerSound.play();
+        // refacto
+        if (game.nb_players == 2) {
+            if (this.ball.collide(game.playerOne)) {
+                game.ball.directionX = -game.ball.directionX;
+                this.playerSound.play();
+            }
+            if (this.ball.collide(game.playerTwo)) {
+                game.ball.directionX = -game.ball.directionX;
+                this.playerSound.play();
+            }
         }
-        if (this.ball.collide(game.playerTwo)) {
-            game.ball.directionX = -game.ball.directionX;
-            this.playerSound.play();
+        else if (game.nb_players == 4) {
+            if (this.ball.collide(game.playerOne)) {
+                game.ball.directionX = -game.ball.directionX;
+                this.playerSound.play();
+            }
+            if (this.ball.collide(game.playerTwo)) {
+                game.ball.directionX = -game.ball.directionX;
+                this.playerSound.play();
+            }
+            if (this.ball.collide(game.playerThree)) {
+                game.ball.directionX = -game.ball.directionX;
+                this.playerSound.play();
+            }
+            if (this.ball.collide(game.playerFour)) {
+                game.ball.directionX = -game.ball.directionX;
+                this.playerSound.play();
+            }
         }
     }
     checkGoal() {
@@ -187,11 +208,18 @@ class Game {
     }
     checkVictory() {
         let winner = null;
-        if (this.playerOne.score === this.scoreToWin)
-            winner = this.getPlayerOne().getPlayerName() + ' wins !';
-        else if (this.playerTwo.score === this.scoreToWin)
-            winner = this.getPlayerTwo().getPlayerName() + ' wins !';
-
+        if (game.nb_players == 2) {
+            if (this.playerOne.score === this.scoreToWin)
+                winner = this.getPlayerOne().getPlayerName() + ' wins !';
+            else if (this.playerTwo.score === this.scoreToWin)
+                winner = this.getPlayerTwo().getPlayerName() + ' wins !';
+        }
+        else if(game.nb_players == 4){
+            if (this.playerOne.score === this.scoreToWin)
+                winner = this.getPlayerOne().getPlayerName() + ' and ' + this.getPlayerThree().getPlayerName() + ' wins !';
+            else if (this.playerTwo.score === this.scoreToWin)
+                winner = this.getPlayerTwo().getPlayerName() + ' and ' + this.getPlayerFour().getPlayerName() + ' wins !';
+        }
         if (winner !== null) {
             this.playersBallLayer.clear();
             this.ball.posX = this.groundHeight / 2

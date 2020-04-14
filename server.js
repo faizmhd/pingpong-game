@@ -97,7 +97,7 @@ io.on('connection', function (socket) {
 
     socket.on('endGame', function (data) {
         socket.join(data.room);
-        socket.broadcast.to(data.room).emit('exitGame', { player1: data.player1 });
+        socket.broadcast.to(data.room).emit('exitGame', { id: data.id });
     });
 });
 
