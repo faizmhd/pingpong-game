@@ -17,28 +17,28 @@ class Player {
         return this.originalPosition;
     }
 
-    getScore () {
+    getScore() {
         return this.score;
     }
 
-    getIARole () {
+    getIARole() {
         this.IA_role;
     }
 
-    setScore () {
+    setScore() {
         this.score = score;
     }
 
-    setPosition (posY) {
+    setPosition(posY) {
         this.posY = posY;
     }
 
-    setIARole (role) {
+    setIARole(role) {
         this.IA_role = role;
     }
 
-    createPlayer (nb_players) {
-        if(nb_players == 2){
+    createPlayer(nb_players) {
+        if (nb_players == 2) {
             if (this.originalPosition === 1) {
                 this.color = "#3333ff";
                 this.posX = 30;
@@ -50,7 +50,7 @@ class Player {
                 this.posY = 200;
             }
         }
-        else if(nb_players == 4){
+        else if (nb_players == 4) {
             if (this.originalPosition === 1) {
                 this.color = "#3333ff";
                 this.posX = 30;

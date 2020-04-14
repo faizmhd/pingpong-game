@@ -47,7 +47,7 @@ io.on('connection', function (socket) {
                 socket.emit('err', { message: 'Sorry, The room is full!' });
             }
         }
-        else if (nb_player == 4){
+        else if (nb_player == 4) {
             if (room && room.length === 1) {
                 socket.join(data.room);
                 socket.broadcast.to(data.room).emit('player1', { player1: player1 });
@@ -58,7 +58,7 @@ io.on('connection', function (socket) {
                 socket.emit('player2', { player2: player2, room: data.room });
             } else if (room && room.length === 2) {
                 socket.join(data.room);
-                
+
                 player3 = {
                     name: data.name,
                     position: 3
@@ -71,7 +71,7 @@ io.on('connection', function (socket) {
                     position: 4
                 };
                 socket.emit('player4', { player4: player4, room: data.room });
-                io.sockets.in(data.room).emit('playgame', { room: data.room, player1: player1, player2: player2, player3:player3, player4:player4, nb_player: nb_player })
+                io.sockets.in(data.room).emit('playgame', { room: data.room, player1: player1, player2: player2, player3: player3, player4: player4, nb_player: nb_player })
             } else {
                 socket.emit('err', { message: 'Sorry, The room is full!' });
             }

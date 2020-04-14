@@ -182,14 +182,14 @@
     });
 
     socket.on('player1', (data) => {
-        const message = `Hello, ${data.player1.name}`;
+        const message = `Hello, ${data.player1.name}. You are Blue !`;
         $('#userHello').html(message);
         game.amIPlayerOne = true;
         game.playerId = 1
     });
 
     socket.on('player2', (data) => {
-        const message = `Hello, ${data.player2.name}`;
+        const message = `Hello, ${data.player2.name}. You are Red !`;
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
@@ -197,7 +197,7 @@
 
     });
     socket.on('player3', (data) => {
-        const message = `Hello, ${data.player3.name}`;
+        const message = `Hello, ${data.player3.name}. You are Green !`;
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
@@ -205,7 +205,7 @@
 
     });
     socket.on('player4', (data) => {
-        const message = `Hello, ${data.player4.name}`;
+        const message = `Hello, ${data.player4.name}. You are Brown !`;
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
@@ -252,7 +252,7 @@
             else if (data.id == 3) {
                 game.getPlayerThree().setPosition(data.position)
             }
-            else{
+            else {
                 game.getPlayerFour().setPosition(data.position)
             }
         }

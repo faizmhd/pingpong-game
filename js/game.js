@@ -211,7 +211,7 @@ class Game {
             if (this.ball.goal(this.playerOne)) {
                 this.playerTwo.score++;
                 this.ball = new Ball(1);
-                this.whoStart = false     
+                this.whoStart = false
             }
             else if (this.ball.goal(this.playerTwo)) {
                 this.playerOne.score++;
@@ -230,7 +230,7 @@ class Game {
             }
             this.scoreLayer.clear();
             this.displayScore(this.playerOne.score, this.playerTwo.score)
-        
+
         }
     }
     checkVictory() {
@@ -241,7 +241,7 @@ class Game {
             else if (this.playerTwo.score === this.scoreToWin)
                 winner = this.getPlayerTwo().getPlayerName() + ' wins !';
         }
-        else if(game.nb_players == 4){
+        else if (game.nb_players == 4) {
             if (this.playerOne.score === this.scoreToWin)
                 winner = this.getPlayerOne().getPlayerName() + ' and ' + this.getPlayerThree().getPlayerName() + ' wins !';
             else if (this.playerTwo.score === this.scoreToWin)

@@ -7,7 +7,7 @@ game.control = {
 
         game.control.controlSystem = "KEYBOARD";
 
-        if(game.nb_players == 2){
+        if (game.nb_players == 2) {
             if (game.playerId == 1) {
                 if (event.keyCode == game.keycode.KEYDOWN) {
                     game.playerOne.goDown = true;
@@ -15,7 +15,7 @@ game.control = {
                     game.playerOne.goUp = true;
                 }
             }
-            else{
+            else {
                 if (event.keyCode == game.keycode.KEYDOWN) {
                     game.playerTwo.goDown = true;
                 } else if (event.keyCode == game.keycode.KEYUP) {
@@ -23,7 +23,7 @@ game.control = {
                 }
             }
         }
-        else if(game.nb_players == 4){
+        else if (game.nb_players == 4) {
             if (game.playerId == 1) {
                 if (event.keyCode == game.keycode.KEYDOWN) {
                     game.playerOne.goDown = true;
@@ -43,7 +43,7 @@ game.control = {
                 } else if (event.keyCode == game.keycode.KEYUP) {
                     game.playerThree.goUp = true;
                 }
-            } else if (game.playerId == 4){
+            } else if (game.playerId == 4) {
                 if (event.keyCode == game.keycode.KEYDOWN) {
                     game.playerFour.goDown = true;
                 } else if (event.keyCode == game.keycode.KEYUP) {
@@ -52,7 +52,7 @@ game.control = {
             }
         }
 
-        
+
 
         if (event.keyCode == game.keycode.SPACEBAR) {
             game.ball.start_game = true;
@@ -64,7 +64,7 @@ game.control = {
 
         game.control.controlSystem = "KEYBOARD";
 
-        if(game.nb_players == 2){
+        if (game.nb_players == 2) {
             if (game.playerId == 1) {
                 if (event.keyCode == game.keycode.KEYDOWN) {
                     game.playerOne.goDown = false;
@@ -72,7 +72,7 @@ game.control = {
                     game.playerOne.goUp = false;
                 }
             }
-            else{
+            else {
                 if (event.keyCode == game.keycode.KEYDOWN) {
                     game.playerTwo.goDown = false;
                 } else if (event.keyCode == game.keycode.KEYUP) {
@@ -80,7 +80,7 @@ game.control = {
                 }
             }
         }
-        else if(game.nb_players == 4){
+        else if (game.nb_players == 4) {
             if (game.playerId == 1) {
                 if (event.keyCode == game.keycode.KEYDOWN) {
                     game.playerOne.goDown = false;
@@ -100,7 +100,7 @@ game.control = {
                 } else if (event.keyCode == game.keycode.KEYUP) {
                     game.playerThree.goUp = false;
                 }
-            } else if (game.playerId == 4){
+            } else if (game.playerId == 4) {
                 if (event.keyCode == game.keycode.KEYDOWN) {
                     game.playerFour.goDown = false;
                 } else if (event.keyCode == game.keycode.KEYUP) {
@@ -113,13 +113,13 @@ game.control = {
 
         game.control.controlSystem = "MOUSE";
 
-        if(game.nb_players == 2){
+        if (game.nb_players == 2) {
             if (game.playerId == 2) {
 
                 if (event) {
                     game.control.mousePointer = event.clientY;
                 }
-    
+
                 if (game.control.mousePointer > game.playerTwo.posY) {
                     game.playerTwo.goDown = true;
                     game.playerTwo.goUp = false;
@@ -135,7 +135,7 @@ game.control = {
                 if (event) {
                     game.control.mousePointer = event.clientY;
                 }
-    
+
                 if (game.control.mousePointer > game.playerOne.posY) {
                     game.playerOne.goDown = true;
                     game.playerOne.goUp = false;
@@ -148,13 +148,13 @@ game.control = {
                 }
             }
         }
-        else if(game.nb_players == 4){
+        else if (game.nb_players == 4) {
             if (game.playerId == 2) {
 
                 if (event) {
                     game.control.mousePointer = event.clientY;
                 }
-            
+
                 if (game.control.mousePointer > game.playerTwo.posY) {
                     game.playerTwo.goDown = true;
                     game.playerTwo.goUp = false;
@@ -167,11 +167,11 @@ game.control = {
                 }
             }
             else if (game.playerId == 3) {
-            
+
                 if (event) {
                     game.control.mousePointer = event.clientY;
                 }
-            
+
                 if (game.control.mousePointer > game.playerThree.posY) {
                     game.playerThree.goDown = true;
                     game.playerThree.goUp = false;
@@ -182,12 +182,12 @@ game.control = {
                     game.playerThree.goDown = false;
                     game.playerThree.goUp = false;
                 }
-            }else if (game.playerId == 4) {
-            
+            } else if (game.playerId == 4) {
+
                 if (event) {
                     game.control.mousePointer = event.clientY;
                 }
-            
+
                 if (game.control.mousePointer > game.playerFour.posY) {
                     game.playerFour.goDown = true;
                     game.playerFour.goUp = false;
@@ -198,11 +198,11 @@ game.control = {
                     game.playerFour.goDown = false;
                     game.playerFour.goUp = false;
                 }
-            } else if (game.playerId == 1){
+            } else if (game.playerId == 1) {
                 if (event) {
                     game.control.mousePointer = event.clientY;
                 }
-            
+
                 if (game.control.mousePointer > game.playerOne.posY) {
                     game.playerOne.goDown = true;
                     game.playerOne.goUp = false;
@@ -215,7 +215,7 @@ game.control = {
                 }
             }
         }
-        
+
     },
     startTheGame: function () {
         game.ball.start_game = true;

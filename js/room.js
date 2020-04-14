@@ -3,7 +3,7 @@ class Room {
         this.roomId = roomId;
     }
 
-    getRoomId () {
+    getRoomId() {
         return this.roomId
     }
 
