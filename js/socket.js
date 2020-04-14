@@ -243,7 +243,6 @@
                 game.getPlayerTwo().setPosition(data.position)
             }
         } else if (game.nb_players == 4) {
-            console.log(game.playerId)
             if (data.id == 1) {
                 game.getPlayerOne().setPosition(data.position)
             }

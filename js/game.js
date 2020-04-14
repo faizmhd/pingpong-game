@@ -187,24 +187,51 @@ class Game {
         }
     }
     checkGoal() {
-        if (this.ball.goal(this.playerOne)) {
-            this.playerTwo.score++;
-            this.ball = new Ball(1);
-            this.whoStart = false
-            if (this.IA) {
-                game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+        if (this.nb_players == 2) {
+            if (this.ball.goal(this.playerOne)) {
+                this.playerTwo.score++;
+                this.ball = new Ball(1);
+                this.whoStart = false
+                if (this.IA) {
+                    game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+                }
             }
-        }
-        else if (this.ball.goal(this.playerTwo)) {
-            this.playerOne.score++;
-            this.ball = new Ball(2)
-            this.whoStart = false
-            if (this.IA) {
-                game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+            else if (this.ball.goal(this.playerTwo)) {
+                this.playerOne.score++;
+                this.ball = new Ball(2)
+                this.whoStart = false
+                if (this.IA) {
+                    game.ia.setPlayerAndBall(this.playerTwo, this.ball);
+                }
             }
+            this.scoreLayer.clear();
+            this.displayScore(this.playerOne.score, this.playerTwo.score)
         }
-        this.scoreLayer.clear();
-        this.displayScore(this.playerOne.score, this.playerTwo.score)
+        else if (this.nb_players == 4) {
+            if (this.ball.goal(this.playerOne)) {
+                this.playerTwo.score++;
+                this.ball = new Ball(1);
+                this.whoStart = false     
+            }
+            else if (this.ball.goal(this.playerTwo)) {
+                this.playerOne.score++;
+                this.ball = new Ball(2)
+                this.whoStart = false
+            }
+            else if (this.ball.goal(this.playerThree)) {
+                this.playerTwo.score++;
+                this.ball = new Ball(1)
+                this.whoStart = false
+            }
+            else if (this.ball.goal(this.playerFour)) {
+                this.playerOne.score++;
+                this.ball = new Ball(2)
+                this.whoStart = false
+            }
+            this.scoreLayer.clear();
+            this.displayScore(this.playerOne.score, this.playerTwo.score)
+        
+        }
     }
     checkVictory() {
         let winner = null;

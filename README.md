@@ -4,12 +4,12 @@ This is a ping pong game which was developed for a school project.
 
 ## How to play ?
 
-You can play against either __the IA__ or an other player by creating an __online game__. 
+You can play against either __the IA__ or other players by creating an __online game__. 
 
 Steps to create an online game :
 
-1. Player 1 : Create a room and wait for the second player.
-2. Player 2 : Join a room by giving the __room id__.
+1. Player 1 : Create a room and choose for the number of players, __2__ or __4__.
+2. Other players : Join the room by giving the __room id__.
 3. Start the game by __entering the spacebar__ or by clicking on the __start button__.
 4. The winner is the first to have __6 points__.
 
@@ -17,14 +17,15 @@ Steps to create an online game :
 
 In the project directory, you can :
 
-* Run Node commands :
+* Use npm :
 
 ```bash
 npm install
+# You can also start the project with nodemon
 npm start
 ```
 
-* Run Docker commands :
+* Use Docker :
 
 ```bash
 docker-compose build
