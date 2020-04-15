@@ -4,7 +4,7 @@ This is a ping pong game which was developed for a school project.
 
 ## How to play ?
 
-You can play against either __the IA__ or other players by creating an __online game__. 
+You can play against either __the IA__ or other players by creating an __online game__.
 
 Steps to create an online game :
 
