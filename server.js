@@ -30,7 +30,6 @@ io.on('connection', function (socket) {
         };
     })
 
-    // Connect the Player 2 to the room he requested. Show error if room full.
     socket.on('joinGame', function (data) {
         let room = io.nsps['/'].adapter.rooms[data.room];
         if (nb_player == 2) {
