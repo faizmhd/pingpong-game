@@ -66,6 +66,13 @@ game.display = {
         targetLayer.context2D.fillRect(x, y, width, heigth);
     },
 
+    drawCircleInLayer: function (targetLayer, width, color, x, y) {
+        targetLayer.context2D.beginPath();
+        targetLayer.context2D.arc(x, y, width/2, 0, 2 * Math.PI)
+        targetLayer.context2D.fillStyle = color;
+        targetLayer.context2D.fill()
+    },
+
     drawTextInLayer: function (targetLayer, text, font, color, x, y) {
         targetLayer.context2D.font = font;
         targetLayer.context2D.fillStyle = color;

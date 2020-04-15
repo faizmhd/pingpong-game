@@ -98,7 +98,7 @@ class Game {
         game.display.drawTextInLayer(this.scoreLayer, scorePlayer2, "60px Arial", "#FFFFFF", this.scorePosPlayer2, 55);
     }
     displayBall() {
-        game.display.drawRectangleInLayer(this.playersBallLayer, this.ball.width, this.ball.height, this.ball.color, this.ball.posX, this.ball.posY);
+        game.display.drawCircleInLayer(this.playersBallLayer, this.ball.width, this.ball.color, this.ball.posX, this.ball.posY);
     }
     displayPlayers() {
         if (this.nb_players == 2) {
