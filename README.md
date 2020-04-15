@@ -17,7 +17,7 @@ Steps to create an online game :
 
 In the project directory, you can :
 
-* Use npm :
+* Use [npm](https://nodejs.org/en/download/) package manager:
 
 ```bash
 npm install
@@ -25,7 +25,7 @@ npm install
 npm start
 ```
 
-* Use Docker :
+* Use [Docker](https://docs.docker.com/docker-for-windows/install/) :
 
 ```bash
 docker-compose build
