@@ -9,21 +9,20 @@ game.ia = {
 
   move: function () {
     if (this.ball.directionX == 1) {
-      if (this.player.originalPosition == "right") {
+      if (this.player.originalPosition == 2) {
         // follow
         this.followBall();
       }
-      if (this.player.originalPosition == "left") {
+      if (this.player.originalPosition == 1) {
         // center
         this.goCenter();
       }
     } else {
-      if (this.player.originalPosition == "right") {
+      if (this.player.originalPosition == 2) {
         // center
         this.goCenter();
-        console.log('ball-dir', this.ball.directionX)
       }
-      if (this.player.originalPosition == "left") {
+      if (this.player.originalPosition == 1) {
         // follow
         this.followBall();
       }
@@ -33,18 +32,18 @@ game.ia = {
   followBall: function () {
     if (this.ball.posY < this.player.posY + this.player.height / 2) {
       // la position de la balle est sur l'écran, au dessus de celle de la raquette
-      this.player.posY--;
+      this.player.posY = this.player.posY - this.ball.getSpeed() + 1;
     } else if (this.ball.posY > this.player.posY + this.player.height / 2) {
       // la position de la balle est sur l'écran, en dessous de celle de la raquette
-      this.player.posY++;
+      this.player.posY = this.player.posY + this.ball.getSpeed() - 1;
     }
   },
 
   goCenter: function () {
     if (this.player.posY + this.player.height / 2 > game.groundHeight / 2) {
-      this.player.posY--;
+      this.player.posY = this.player.posY - this.ball.getSpeed() + 1;
     } else if (this.player.posY + this.player.height / 2 < game.groundHeight / 2) {
-      this.player.posY++;
+      this.player.posY = this.player.posY + this.ball.getSpeed() - 1;
     }
   }
 }

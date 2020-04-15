@@ -22,9 +22,9 @@
   <div class='container'>
     <div class="menu">
       <div id='ping-title'>
-      <h1>Ping Pong</h1>
-      <img id='logo-racket' alt='logo' src='./images/racket.png'>
-    </div>
+        <h1>Ping Pong</h1>
+        <img id='logo-racket' alt='logo' src='./images/racket.png'>
+      </div>
       <h3>How To Play ?</h3>
       <ol>
         <li><b>Player 1</b> Create an online game or play againt IA</li>
@@ -40,12 +40,18 @@
           <button id="new">New Game</button>
         </div>
         <div>
-          <h4>Play a game againt IA</h4>
+          <h4>Play a game against IA</h4>
           <input type="text" name="name" id="nameNewIA" placeholder="Enter your name" required>
           <button id="new_IA">Play Game</button>
         </div>
       </div>
-      <br>
+      <div id='nb_player_radio'>
+        <h6>Number of players</h6>
+        <input type="radio" id="nb_player_2" name="nb_player" value="2" checked>
+        <label for="nb_player_2">2</label>
+        <input type="radio" id="nb_player_4" name="nb_player" value="4">
+        <label for="nb_player_4">4</label>
+      </div>
       <h4>Join an existing game</h4>
       <input type="text" name="name" id="nameJoin" placeholder="Enter your name" required>
       <input type="text" name="room" id="room" placeholder="Enter Game ID" required>

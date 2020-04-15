@@ -11,19 +11,16 @@
     var main = function () {
         // le code du jeu
         game.clearLayer(game.playersBallLayer);
-        if (game.IA)
-            updatePlayers()
+        updatePlayers()
         game.displayPlayers();
         game.displayBall();
-        if (game.IA)
-            startGame()
+        startGame()
         game.moveBall();
-        if (game.IA)
-            updateBall()
+        updateBall()
         game.checkGoal();
         game.checkVictory();
+        checkEndGame();
         if (game.IA) {
-            checkEndGame();
             game.ia.move();
         }
         game.collideBallWithPlayersAndAction();
@@ -31,44 +28,104 @@
     }
 
     var updatePlayers = function () {
-        if (game.amIPlayerOne) {
-            let player1_pos = game.movePlayer1();
-            if (player1_pos) {
-                socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: true, position: player1_pos })
+        if (game.nb_players == 2) {
+            if (game.playerId == 1) {
+                let player1_pos = game.movePlayer(game.getPlayerOne());
+                if (player1_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player1_pos })
+                }
+            }
+            else {
+                let player2_pos = game.movePlayer(game.getPlayerTwo());
+                if (player2_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player2_pos })
+                }
             }
         }
-        else {
-            let player2_pos = game.movePlayer2();
-            if (player2_pos) {
-                socket.emit('updatePlayer', { room: this.pong.getRoomId(), player1: false, position: player2_pos })
+        else if (game.nb_players == 4) {
+            if (game.playerId == 1) {
+                let player1_pos = game.movePlayer(game.getPlayerOne());
+                if (player1_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player1_pos })
+                }
+            }
+            else if (game.playerId == 2) {
+                let player2_pos = game.movePlayer(game.getPlayerTwo());
+                if (player2_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player2_pos })
+                }
+            }
+            else if (game.playerId == 3) {
+                let player3_pos = game.movePlayer(game.getPlayerThree());
+                if (player3_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player3_pos })
+                }
+            } else if (game.playerId == 4) {
+                let player4_pos = game.movePlayer(game.getPlayerFour());
+                if (player4_pos) {
+                    socket.emit('updatePlayer', { room: this.pong.getRoomId(), id: game.playerId, position: player4_pos })
+                }
             }
         }
+
     }
 
     var startGame = function () {
-        if (game.amIPlayerOne && game.whoStart) {
-            socket.emit('updateGameStatus', { room: this.pong.getRoomId(), player1: true, start: true })
+        if (game.nb_players == 2) {
+            if (game.playerId == 1 && game.whoStart) {
+                socket.emit('updateGameStatus', { room: this.pong.getRoomId(), start: true })
+            }
+            else if (game.playerId == 2 && game.whoStart) {
+                socket.emit('updateGameStatus', { room: this.pong.getRoomId(), start: true })
+            }
         }
-        else if (!game.amIPlayerOne && game.whoStart) {
-            socket.emit('updateGameStatus', { room: this.pong.getRoomId(), player1: false, start: true })
+        else if (game.nb_players == 4) {
+            if (game.playerId == 1 && game.whoStart) {
+                socket.emit('updateGameStatus', { room: this.pong.getRoomId(), start: true })
+            }
+            else if (game.playerId == 2 && game.whoStart) {
+                socket.emit('updateGameStatus', { room: this.pong.getRoomId(), start: true })
+            }
+            else if (game.playerId == 3 && game.whoStart) {
+                socket.emit('updateGameStatus', { room: this.pong.getRoomId(), start: true })
+            }
+            else if (game.playerId == 4 && game.whoStart) {
+                socket.emit('updateGameStatus', { room: this.pong.getRoomId(), start: true })
+            }
         }
     }
 
     var updateBall = function () {
-        if (game.amIPlayerOne && game.whoStart) {
-            socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
+        if (game.nb_players == 2) {
+            if (game.playerId == 1 && game.whoStart) {
+                socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
+            }
+            else if (game.playerId == 2 && game.whoStart) {
+                socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
+            }
         }
-        else if (!game.amIPlayerOne && game.whoStart) {
-            socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
+        else if (game.nb_players == 4) {
+            if (game.playerId == 1 && game.whoStart) {
+                socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
+            }
+            else if (game.playerId == 2 && game.whoStart) {
+                socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
+            }
+            else if (game.playerId == 3 && game.whoStart) {
+                socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
+            }
+            else if (game.playerId == 4 && game.whoStart) {
+                socket.emit('updateBall', { room: this.pong.getRoomId(), posX: game.getBall().getPosX(), posY: game.getBall().getPosY() })
+            }
         }
     }
 
     var checkEndGame = function () {
         if (game.exitGame && game.amIPlayerOne) {
-            socket.emit('endGame', { room: this.pong.getRoomId(), player1: true });
+            socket.emit('endGame', { room: this.pong.getRoomId(), id: game.playerId });
         }
         else if (game.exitGame && !game.amIPlayerOne) {
-            socket.emit('endGame', { room: this.pong.getRoomId(), player1: false });
+            socket.emit('endGame', { room: this.pong.getRoomId(), id: game.playerId });
         }
     }
 
@@ -82,11 +139,13 @@
         const message =
             `Hello, ${name}.`;
         game.amIPlayerOne = true;
+        game.playerId = 1
         this.pong = new Room('IA_room');
         this.pong.displayBoard(message);
-        player1 = new Player(name, 'left')
+        player1 = new Player(name, 1)
         game.setPlayerOne(player1)
-        player2 = new Player('IA', 'right')
+        player2 = new Player('IA', 2)
+        player2.setIARole(true)
         game.setPlayerTwo(player2)
         game.IA = true;
         initialisation();
@@ -98,14 +157,14 @@
             alert('Please enter your name.');
             return;
         }
-        socket.emit('createGame', { name });
-
+        const nb_player = $('input[name=nb_player]:checked').val();
+        socket.emit('createGame', { name: name, nb_player: nb_player });
     });
 
     socket.on('newGame', (data) => {
         const message =
             `Hello, ${data.name}. Please ask your friend to enter Game ID: 
-      ${data.room}. Waiting for player 2...`;
+      ${data.room}. Waiting for opponents...`;
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
@@ -123,33 +182,79 @@
     });
 
     socket.on('player1', (data) => {
-        const message = `Hello, ${data.player1.name}`;
+        const message = `Hello, ${data.player1.name}. You are Blue !`;
         $('#userHello').html(message);
         game.amIPlayerOne = true;
+        game.playerId = 1
     });
 
     socket.on('player2', (data) => {
-        const message = `Hello, ${data.name}`;
+        const message = `Hello, ${data.player2.name}. You are Red !`;
 
         this.pong = new Room(data.room);
         this.pong.displayBoard(message);
+        game.playerId = 2
+
+    });
+    socket.on('player3', (data) => {
+        const message = `Hello, ${data.player3.name}. You are Green !`;
+
+        this.pong = new Room(data.room);
+        this.pong.displayBoard(message);
+        game.playerId = 3
+
+    });
+    socket.on('player4', (data) => {
+        const message = `Hello, ${data.player4.name}. You are Brown !`;
+
+        this.pong = new Room(data.room);
+        this.pong.displayBoard(message);
+        game.playerId = 4
 
     });
 
     socket.on('playgame', (data) => {
-        player1 = new Player(data.player1.name, data.player1.position)
-        game.setPlayerOne(player1)
-        player2 = new Player(data.player2.name, data.player2.position)
-        game.setPlayerTwo(player2)
+        if (data.nb_player == 2) {
+            player1 = new Player(data.player1.name, data.player1.position)
+            game.setPlayerOne(player1)
+            player2 = new Player(data.player2.name, data.player2.position)
+            game.setPlayerTwo(player2)
+        } else if (data.nb_player == 4) {
+            game.nb_players = data.nb_player
+            player1 = new Player(data.player1.name, data.player1.position)
+            game.setPlayerOne(player1)
+            player2 = new Player(data.player2.name, data.player2.position)
+            game.setPlayerTwo(player2)
+            player3 = new Player(data.player3.name, data.player3.position)
+            game.setPlayerThree(player3)
+            player4 = new Player(data.player4.name, data.player4.position)
+            game.setPlayerFour(player4)
+        }
+
         initialisation();
 
     });
     socket.on('movePlayers', (data) => {
-        if (data.player1) {
-            game.getPlayerOne().setPosition(data.position)
-        }
-        else {
-            game.getPlayerTwo().setPosition(data.position)
+        if (game.nb_players == 2) {
+            if (data.id == 1) {
+                game.getPlayerOne().setPosition(data.position)
+            }
+            else {
+                game.getPlayerTwo().setPosition(data.position)
+            }
+        } else if (game.nb_players == 4) {
+            if (data.id == 1) {
+                game.getPlayerOne().setPosition(data.position)
+            }
+            else if (data.id == 2) {
+                game.getPlayerTwo().setPosition(data.position)
+            }
+            else if (data.id == 3) {
+                game.getPlayerThree().setPosition(data.position)
+            }
+            else {
+                game.getPlayerFour().setPosition(data.position)
+            }
         }
     })
     socket.on('moveBall', (data) => {
@@ -161,11 +266,27 @@
     });
 
     socket.on('exitGame', (data) => {
-        if (data.player1) {
-            message = game.getPlayerOne().getPlayerName() + ' leaves the room !'
+        if (game.nb_players == 2) {
+            if (data.id == 1) {
+                message = game.getPlayerOne().getPlayerName() + ' leaves the room !'
+            }
+            else if (data.id == 2) {
+                message = game.getPlayerTwo().getPlayerName() + ' leaves the room !'
+            }
         }
-        else {
-            message = game.getPlayerTwo().getPlayerName() + ' leaves the room !'
+        else if (game.nb_players == 4) {
+            if (data.id == 1) {
+                message = game.getPlayerOne().getPlayerName() + ' leaves the room !'
+            }
+            else if (data.id == 2) {
+                message = game.getPlayerTwo().getPlayerName() + ' leaves the room !'
+            }
+            else if (data.id == 3) {
+                message = game.getPlayerThree().getPlayerName() + ' leaves the room !'
+            }
+            else if (data.id == 4) {
+                message = game.getPlayerFour().getPlayerName() + ' leaves the room !'
+            }
         }
         alert(message);
         location.reload();

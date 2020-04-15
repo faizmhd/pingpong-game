@@ -17,7 +17,7 @@ game.display = {
     },
 
     createLayer: function (name, width, height, htmlContainer, zIndex, backgroundColor, x, y) {
-        var layer = Object.create(this.layer);        
+        var layer = Object.create(this.layer);
 
         layer.canvas = window.document.createElement("canvas");
 
@@ -66,6 +66,13 @@ game.display = {
         targetLayer.context2D.fillRect(x, y, width, heigth);
     },
 
+    drawCircleInLayer: function (targetLayer, width, color, x, y) {
+        targetLayer.context2D.beginPath();
+        targetLayer.context2D.arc(x, y, width/2, 0, 2 * Math.PI)
+        targetLayer.context2D.fillStyle = color;
+        targetLayer.context2D.fill()
+    },
+
     drawTextInLayer: function (targetLayer, text, font, color, x, y) {
         targetLayer.context2D.font = font;
         targetLayer.context2D.fillStyle = color;
@@ -75,8 +82,8 @@ game.display = {
     drawScoreLayer: function (targetLayer, winner, width, heigth) {
         targetLayer.context2D.fillStyle = "	#A8A8A8";
         targetLayer.context2D.font = "30px Arial";
-        targetLayer.context2D.fillRect(width/4, heigth/4, width/2, heigth/2);
+        targetLayer.context2D.fillRect(width / 4, heigth / 4, width / 2, heigth / 2);
         targetLayer.context2D.fillStyle = "	#FFFFFF"
-        targetLayer.context2D.fillText(winner, width/4+width/8, heigth/2);
+        targetLayer.context2D.fillText(winner, width / 4 + width / 8, heigth / 2);
     }
 }

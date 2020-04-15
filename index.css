@@ -29,3 +29,8 @@ div:nth-child(2) {
 #ping-title {
     display: flex;
 }
+
+#nb_player_radio {
+    display: flex;
+}
+
