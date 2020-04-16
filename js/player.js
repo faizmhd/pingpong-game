@@ -63,12 +63,12 @@ class Player {
             }
             else if (this.originalPosition === 3) {
                 this.color = "#2eb82e";
-                this.posX = 30;
+                this.posX = 230;
                 this.posY = 300;
             }
             else if (this.originalPosition === 4) {
                 this.color = "#bf8040";
-                this.posX = 650;
+                this.posX = 450;
                 this.posY = 300;
             }
         }
