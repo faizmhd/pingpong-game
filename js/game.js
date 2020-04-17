@@ -177,11 +177,21 @@ class Game {
                 this.playerSound.play();
             }
             if (this.ball.collide(game.playerThree)) {
-                game.ball.directionX = -game.ball.directionX;
+                if(game.ball.directionX === 1){
+                    game.ball.directionX = 1;
+                }
+                else {
+                    game.ball.directionX = -game.ball.directionX;
+                }
                 this.playerSound.play();
             }
             if (this.ball.collide(game.playerFour)) {
-                game.ball.directionX = -game.ball.directionX;
+                if(game.ball.directionX === -1){
+                    game.ball.directionX = -1;
+                }
+                else {
+                    game.ball.directionX = -game.ball.directionX;
+                }
                 this.playerSound.play();
             }
         }
